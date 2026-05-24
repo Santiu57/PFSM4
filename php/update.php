@@ -10,11 +10,11 @@ if ($_POST) {
 
     $accion = $_POST['accion'];
 
-    if($accion == "guardar") {
+    if ($accion == "guardar") {
         $sql = "UPDATE juegos SET distribuidora='$distribuidora', juego='$juego', precio='$precio' WHERE id=$id";
     }
 
-    if($accion == "eliminar") {
+    if ($accion == "eliminar") {
         $sql = "DELETE FROM juegos WHERE id=$id";
     }
 
@@ -25,5 +25,10 @@ if ($_POST) {
     }
 }
 
+if ($data = json_decode(file_get_contents("php://input"), true)) {
+    echo $data['juego'];
+} else {
+    echo "No se recibieron datos JSON";
+}
+
 mysqli_close($conn);
-?>

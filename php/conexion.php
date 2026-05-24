@@ -3,7 +3,7 @@
 $servidor = "localhost";
 $usuario = "root";
 $password = "";
-$bd = "info";
+$bd = "cafeteria";
 
 $conn = mysqli_connect($servidor, $usuario, $password, $bd);
 
