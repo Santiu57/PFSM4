@@ -2,31 +2,30 @@
 
 include("../php/conexion.php");
 
-if ($_POST) {
-    $id = $_POST['id'];
-    $distribuidora = $_POST['Distribuidora'];
-    $juego = $_POST['Juego'];
-    $precio = $_POST['Precio'];
-
-    $accion = $_POST['accion'];
-
-    if ($accion == "guardar") {
-        $sql = "UPDATE juegos SET distribuidora='$distribuidora', juego='$juego', precio='$precio' WHERE id=$id";
-    }
-
-    if ($accion == "eliminar") {
-        $sql = "DELETE FROM juegos WHERE id=$id";
+if ($data = json_decode(file_get_contents("php://input"), true)) {
+    switch ($data["table"]) {
+        case "productos":
+            $sql =
+                "UPDATE productos SET 
+                nombre = '{$data['nombre']}',
+                descripcion = '{$data['descripcion']}',
+                precio = '{$data['precio']}',
+                idProveedor = '{$data['proveedor']}'
+                WHERE idProducto = {$data['id']}";
+            break;
+        case "proveedores":
+            $sql =
+                "UPDATE proveedores SET 
+                nombre = '{$data['nombre']}'
+                WHERE idProveedor = {$data['id']}";
+            break;
     }
 
     if (mysqli_query($conn, $sql)) {
         echo "Registro actualizado correctamente";
     } else {
-        echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+        echo "Error: " . mysqli_error($conn);
     }
-}
-
-if ($data = json_decode(file_get_contents("php://input"), true)) {
-    echo $data['juego'];
 } else {
     echo "No se recibieron datos JSON";
 }

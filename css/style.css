@@ -1,7 +1,391 @@
+/* Fondo general */
 body {
-    background-color: #f0f0f0;
+    background: #f4f6f9;
     font-family: Arial, sans-serif;
-    width: 85%;
-    margin: 0 auto;
+    margin: 0;
+    padding: 30px;
+}
+
+/* Contenedor catálogo */
+#catalogo {
+    max-width: 1100px;
+    margin: auto;
+}
+
+/* Tarjeta producto */
+.producto {
+    background: #ffffff;
+    border-radius: 18px;
     padding: 20px;
+    margin-bottom: 25px;
+    position: relative;
+    min-height: 190px;
+    overflow: hidden;
+
+    box-shadow:
+        0 6px 18px rgba(0, 0, 0, .08),
+        0 2px 6px rgba(0, 0, 0, .04);
+
+    transition:
+        transform .25s ease,
+        box-shadow .25s ease;
+}
+
+/* Hover */
+.producto:hover {
+    transform: translateY(-4px);
+
+    box-shadow:
+        0 12px 28px rgba(0, 0, 0, .12),
+        0 4px 10px rgba(0, 0, 0, .06);
+}
+
+/* Imagen */
+.producto .catalogo-imagen {
+    width: 150px;
+    height: 150px;
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    object-fit: cover;
+
+    border-radius: 14px;
+    background: #f0f0f0;
+    border: 2px solid #ececec;
+
+    box-shadow:
+        0 4px 12px rgba(0, 0, 0, .10);
+}
+
+/* Zona de texto */
+.producto .nombre,
+.producto .descripcion,
+.producto .precio,
+.producto .proveedor {
+    margin-left: 190px;
+}
+
+/* Nombre */
+.producto .nombre {
+    margin-top: 0;
+    margin-bottom: 12px;
+
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #1f2937;
+}
+
+/* Descripción */
+.producto .descripcion {
+    color: #6b7280;
+    line-height: 1.5;
+    margin-bottom: 14px;
+}
+
+/* Precio */
+.producto .precio {
+    display: inline-block;
+    background: #16a34a;
+    color: white;
+
+    padding: 8px 14px;
+    border-radius: 10px;
+
+    font-size: 1.1rem;
+    font-weight: bold;
+    margin-bottom: 12px;
+
+    box-shadow:
+        0 3px 8px rgba(22, 163, 74, .25);
+}
+
+/* Proveedor */
+.producto .proveedor {
+    color: #4b5563;
+    font-size: 0.95rem;
+}
+
+/* Etiqueta visual proveedor */
+.producto .proveedor::before {
+    content: "🏢 ";
+}
+
+/* ---------- ADMIN ---------- */
+
+/* ID */
+.producto .id {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+
+    margin: 0;
+    padding: 6px 12px;
+
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
+    color: white;
+
+    border-radius: 999px;
+    font-size: 1.8rem;
+    font-weight: 700;
+    letter-spacing: .5px;
+
+    box-shadow:
+        0 4px 10px rgba(37, 99, 235, .25);
+}
+
+/* Filas label + input */
+.producto .campo {
+    margin-left: 190px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 14px;
+}
+
+/* Labels */
+.producto .campo p {
+    margin: 0;
+    min-width: 110px;
+    font-weight: 600;
+    color: #374151;
+}
+
+/* Inputs */
+.producto input {
+    flex: 1;
+
+    padding: 10px 14px;
+    border: 1px solid #d1d5db;
+    border-radius: 10px;
+
+    background: #f9fafb;
+    color: #111827;
+    font-size: .95rem;
+
+    outline: none;
+
+    transition:
+        border-color .2s,
+        box-shadow .2s,
+        background .2s;
+}
+
+/* Focus */
+.producto input:focus {
+    border-color: #2563eb;
+    background: white;
+
+    box-shadow:
+        0 0 0 4px rgba(37, 99, 235, .12);
+}
+
+/* Precio ligeramente distinto */
+.producto .precio-Upd {
+    max-width: 150px;
+    font-weight: 700;
+}
+
+/* Placeholder opcional */
+.producto input::placeholder {
+    color: #9ca3af;
+}
+
+/* Lista proveedores */
+.lista-proveedores {
+    width: 100%;
+    min-width: 220px;
+
+    padding: 10px 14px;
+
+    border: 1px solid #d1d5db;
+    border-radius: 10px;
+
+    background: #f9fafb;
+    font-size: .95rem;
+    color: #111827;
+
+    outline: none;
+
+    transition:
+        border-color .2s,
+        box-shadow .2s;
+}
+
+.lista-proveedores:focus {
+    border-color: #2563eb;
+    box-shadow:
+        0 0 0 4px rgba(37, 99, 235, .12);
+}
+
+/* zona botones */
+.producto .campo:last-child {
+    margin-left: 190px;
+    display: flex;
+    gap: 12px;
+    margin-top: 18px;
+}
+
+/* base */
+.producto button {
+    border: none;
+    border-radius: 12px;
+    padding: 11px 18px;
+
+    font-size: .95rem;
+    font-weight: 600;
+    cursor: pointer;
+
+    transition:
+        transform .18s ease,
+        box-shadow .18s ease,
+        opacity .18s ease;
+
+    box-shadow:
+        0 4px 10px rgba(0, 0, 0, .08);
+}
+
+/* hover general */
+.producto button:hover {
+    transform: translateY(-2px);
+}
+
+/* click */
+.producto button:active {
+    transform: scale(.97);
+}
+
+/* ACTUALIZAR */
+.producto .update {
+    background:
+        linear-gradient(135deg,
+            #16a34a,
+            #15803d);
+
+    color: white;
+
+    box-shadow:
+        0 6px 14px rgba(22, 163, 74, .25);
+}
+
+.producto .update:hover {
+    box-shadow:
+        0 10px 20px rgba(22, 163, 74, .35);
+}
+
+/* ELIMINAR */
+.producto .delete {
+    background:
+        linear-gradient(135deg,
+            #dc2626,
+            #b91c1c);
+
+    color: white;
+
+    box-shadow:
+        0 6px 14px rgba(220, 38, 38, .25);
+}
+
+.producto .delete:hover {
+    box-shadow:
+        0 10px 20px rgba(220, 38, 38, .35);
+}
+
+/* iconos */
+.producto .update::before {
+    content: "💾 ";
+}
+
+.producto .delete::before {
+    content: "🗑 ";
+}
+
+/* contenedor */
+.producto .imagen-container {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+
+    width: 150px;
+    height: 150px;
+
+    border-radius: 14px;
+    overflow: hidden;
+    cursor: pointer;
+
+    border: 2px solid #ececec;
+
+    box-shadow:
+        0 4px 12px rgba(0, 0, 0, .10);
+}
+
+/* imagen */
+.producto .imagen-Upd {
+    position: relative;
+    display: block;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+    object-position: center center;
+
+    transition:
+        transform .25s ease,
+        filter .25s ease;
+}
+
+/* overlay oscuro */
+.producto .imagen-container::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+
+    background:
+        rgba(0, 0, 0, .35);
+
+    opacity: 0;
+    transition: opacity .25s ease;
+    z-index: 2;
+}
+
+/* lápiz */
+.producto .imagen-container::after {
+    content: "✏";
+
+    position: absolute;
+    inset: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 2rem;
+    color: white;
+
+    opacity: 0;
+    z-index: 3;
+
+    transform: scale(.75);
+    transition:
+        opacity .25s ease,
+        transform .25s ease;
+}
+
+/* hover */
+.producto .imagen-container:hover .imagen-Upd {
+
+    transform: scale(1.08);
+
+    filter:
+        grayscale(.35) brightness(.65) blur(1.5px);
+}
+
+/* mostrar */
+.producto .imagen-container:hover::before,
+.producto .imagen-container:hover::after {
+    opacity: 1;
+}
+
+.producto .imagen-container:hover::after {
+    transform: scale(1);
 }

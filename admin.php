@@ -20,6 +20,11 @@
     </nav>
 
     <main>
+        <h2>Productos</h2>
+        <section id="productos">
+
+        </section>
+        <script src="js/admin/productos.js" type="module"></script>
         <h2>Agregar Producto</h2>
         <form method="POST" action="php/insert.php" enctype="multipart/form-data">
             <input type="text" name="nombre" id="nombre" placeholder="Nombre">
@@ -42,7 +47,6 @@
     <footer>
 
     </footer>
-    <script src="js/edit.js"></script>
 </body>
 
 </html>
