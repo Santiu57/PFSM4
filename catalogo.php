@@ -1,6 +1,6 @@
 <?php
 
-include("php/conexion.php");
+require_once("php/conexion.php");
 
 ?>
 
@@ -9,6 +9,7 @@ include("php/conexion.php");
 
 <head>
     <title>Catalogo</title>
+    <link rel="icon" type="image/webp" href="img/ui/icon.webp">
     <link rel="stylesheet" href="css/style.css">
 </head>
 
@@ -21,16 +22,19 @@ include("php/conexion.php");
         <a href="nosotros.php">Nosotros</a>
         <a href="catalogo.php">Catalogo</a>
         <a href="contacto.php">Contacto</a>
+        <a href="admin.php">Admin</a>
     </nav>
     <main>
+        <section id="catalogo">
 
+        </section>
     </main>
 
     <footer>
 
     </footer>
 
-    <script src="js/edit.js"></script>
+    <script src="js/catalogo.js"></script>
 </body>
 
 </html>
