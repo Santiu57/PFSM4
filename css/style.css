@@ -64,7 +64,8 @@ body {
     box-shadow: 0 4px 12px rgba(0, 0, 0, .10);
 }
 
-.producto .imagen-input {
+.producto .imagen-input,
+.producto .imagen-input-agregar {
     position: absolute;
     inset: 0;
     opacity: 0;
@@ -314,7 +315,8 @@ body {
     box-shadow: 0 4px 12px rgba(0, 0, 0, .10);
 }
 
-.productos-form .imagen-input {
+.productos-form .imagen-input,
+.productos-form .imagen-input-agregar {
     position: absolute;
     inset: 0;
     opacity: 0;
@@ -696,4 +698,277 @@ body {
     transform: translateY(-2px);
     box-shadow:
         0 10px 20px rgba(22, 163, 74, .35);
+}
+
+/* ═══════════════════════════════════════════
+   CATÁLOGO
+═══════════════════════════════════════════ */
+
+#catalogo {
+    max-width: 1300px;
+    margin: auto;
+
+    display: grid;
+    gap: 24px;
+    grid-template-columns:
+        repeat(auto-fit, minmax(400px, 1fr));
+}
+
+
+/* ═══════════════════════════════════════════
+   TARJETA CATÁLOGO
+═══════════════════════════════════════════ */
+
+#catalogo .producto {
+    background: #ffffff;
+    border-radius: 18px;
+    padding: 20px 20px 20px 190px;
+    margin-bottom: 0;
+
+    position: relative;
+    min-height: 190px;
+
+    box-shadow:
+        0 6px 18px rgba(0, 0, 0, .08),
+        0 2px 6px rgba(0, 0, 0, .04);
+
+    transition:
+        transform .25s ease,
+        box-shadow .25s ease;
+}
+
+#catalogo .producto:hover {
+    transform: translateY(-4px);
+
+    box-shadow:
+        0 12px 28px rgba(0, 0, 0, .12),
+        0 4px 10px rgba(0, 0, 0, .06);
+}
+
+
+/* ═══════════════════════════════════════════
+   IMAGEN PRODUCTO
+═══════════════════════════════════════════ */
+
+#catalogo .catalogo-imagen {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+
+    width: 150px;
+    height: 150px;
+
+    object-fit: cover;
+    object-position: center;
+
+    border-radius: 14px;
+    border: 2px solid #ececec;
+    background: #f0f0f0;
+
+    box-shadow:
+        0 4px 12px rgba(0, 0, 0, .10);
+
+    transition:
+        transform .25s ease,
+        filter .25s ease;
+}
+
+#catalogo .producto:hover .catalogo-imagen {
+    transform: scale(1.04);
+}
+
+
+/* ═══════════════════════════════════════════
+   CONTENIDO PRODUCTO
+═══════════════════════════════════════════ */
+
+#catalogo .nombre {
+    margin: 0 0 12px;
+    font-size: 1.45rem;
+    font-weight: 700;
+    color: #1f2937;
+    line-height: 1.2;
+}
+
+#catalogo .descripcion {
+    margin: 0 0 14px;
+    color: #6b7280;
+    line-height: 1.55;
+}
+
+#catalogo .precio {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    margin: 0 0 12px;
+    padding: 8px 14px;
+
+    border-radius: 10px;
+
+    background:
+        linear-gradient(135deg, #16a34a, #15803d);
+    color: white;
+
+    font-size: 1.05rem;
+    font-weight: 700;
+
+    box-shadow:
+        0 4px 10px rgba(22, 163, 74, .25);
+}
+
+#catalogo .proveedor {
+    margin: 0;
+    color: #4b5563;
+    font-size: .95rem;
+}
+
+#catalogo .proveedor::before {
+    content: "🏢 ";
+}
+
+
+/* ═══════════════════════════════════════════
+   RESPONSIVE CATÁLOGO
+═══════════════════════════════════════════ */
+
+@media (max-width: 720px) {
+
+    #catalogo {
+        grid-template-columns: 1fr;
+    }
+
+    #catalogo .producto {
+        padding: 20px;
+    }
+
+    #catalogo .catalogo-imagen {
+        position: relative;
+        top: auto;
+        left: auto;
+
+        width: 100%;
+        height: 220px;
+
+        margin-bottom: 16px;
+    }
+}
+
+/* ═══════════════════════════════════════════
+   DESCRIPCIÓN EXPANDIBLE
+═══════════════════════════════════════════ */
+
+#catalogo .descripcion-container {
+    position: relative;
+    margin-bottom: 12px;
+}
+
+/* Texto */
+#catalogo .descripcion {
+    margin: 0;
+    color: #6b7280;
+    line-height: 1.55;
+
+    max-height: 72px;
+    overflow: hidden;
+
+    transition: max-height .35s ease;
+}
+
+/* texto colapsado */
+#catalogo .descripcion {
+    margin: 0;
+    line-height: 1.55;
+
+    max-height: 72px;
+    overflow: hidden;
+
+    transition:
+        max-height .35s ease;
+}
+
+/* expandido */
+#catalogo .descripcion-container.expandida .descripcion {
+    max-height: 6000px;
+}
+
+/* fade */
+#catalogo .descripcion-container.fade::after {
+    content: "";
+    position: absolute;
+
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    height: 42px;
+
+    background:
+        linear-gradient(to bottom,
+            rgba(255, 255, 255, 0),
+            rgba(255, 255, 255, .9),
+            #fff);
+
+    pointer-events: none;
+}
+
+#catalogo .descripcion-container.expandida::after {
+    display: none;
+}
+
+/* Contenedor */
+#catalogo .descripcion-container {
+    position: relative;
+    margin-bottom: 22px;
+    padding-bottom: 18px;
+}
+
+/* Flecha */
+#catalogo .expandir-desc {
+    position: absolute;
+
+    left: 50%;
+    bottom: -20px;
+    transform: translateX(-50%);
+
+    width: 34px;
+    height: 34px;
+    padding: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: none;
+    border-radius: 50%;
+
+    background: #fff;
+    color: #2563eb;
+
+    box-shadow:
+        0 4px 12px rgba(0, 0, 0, .12);
+
+    cursor: pointer;
+    z-index: 10;
+
+    font-size: 1rem;
+    line-height: 1;
+
+    transition:
+        transform .25s ease,
+        box-shadow .25s ease,
+        background .2s ease,
+        color .2s ease;
+}
+
+#catalogo .expandir-desc:hover {
+    background: #2563eb;
+    color: #fff;
+    box-shadow:
+        0 8px 18px rgba(37, 99, 235, .25);
+}
+
+/* Rotación */
+#catalogo .descripcion-container.expandida .expandir-desc {
+    transform: rotate(180deg);
 }

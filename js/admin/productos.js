@@ -146,7 +146,7 @@ agregar.innerHTML = `
         <h2>Agregar Producto</h2>
 
         <div class="imagen-container">
-            <input type="file" class="imagen-input" accept="image/*">
+            <input type="file" class="imagen-input-agregar" accept="image/*">
             <img class="imagen-preview-agregar" style="display:block;">
         </div>
 
@@ -181,7 +181,7 @@ const selectNuevo = lista.clone();
 agregar.querySelector(".proveedor-container-nuevo").appendChild(selectNuevo);
 
 // Preview de imagen en el form de agregar
-agregar.querySelector(".imagen-input").addEventListener("change", e => {
+agregar.querySelector(".imagen-input-agregar").addEventListener("change", e => {
     const file = e.target.files[0];
     if (!file) return;
 
