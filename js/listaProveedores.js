@@ -20,6 +20,8 @@ export class ListaProveedores {
 
         const data = await r.json();
 
+        console.log(data);
+
         this.list.innerHTML = "";
 
         data.forEach(p => {

@@ -19,22 +19,17 @@
         <a href="admin.php">Admin</a>
     </nav>
 
-    <main>
+    <main id="content">
         <h2>Productos</h2>
         <section id="productos">
 
         </section>
         <script src="js/admin/productos.js" type="module"></script>
-        <h2>Agregar Producto</h2>
-        <form method="POST" action="php/insert.php" enctype="multipart/form-data">
-            <input type="text" name="nombre" id="nombre" placeholder="Nombre">
-            <input type="text" name="descripcion" id="descripcion" placeholder="Descripcion">
-            <input type="number" name="precio" id="precio" placeholder="Precio">
-            <input type="text" name="proveedor" id="idProveedor" placeholder="Proveedores">
-            <input type="file" name="imagen" id="imagen" accept="image/*">
-            <input type="hidden" name="action" value="producto">
-            <button type="submit">Agregar</button>
-        </form>
+        <h2>Proveedores</h2>
+        <section id="proveedores">
+
+        </section>
+        <script src="js/admin/proveedores.js" type="module"></script>
         <h2>Agregar Proveedores</h2>
         <form method="POST" action="php/insert.php">
             <input type="text" name="nombre" id="nombre" placeholder="Nombre">
