@@ -1,17 +1,15 @@
-import {
-    ListaProveedores
-} from "../listaProveedores.js";
+import { ListaProveedores } from "../listaProveedores.js";
 
 const section = document.getElementById("productos");
 
 const lista = new ListaProveedores();
 await lista.load();
 
+// ─── Cargar y renderizar productos ───────────────────────────────────────────
+
 fetch("./php/get.php", {
     method: "POST",
-    headers: {
-        "Content-Type": "application/json"
-    },
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
         table: "productos",
         items: "idProducto, nombre, descripcion, precio, imagen, productos.idProveedor, nombreProveedor",
@@ -22,305 +20,205 @@ fetch("./php/get.php", {
 })
     .then(r => r.json())
     .then(data => {
-        console.log(data);
         data.forEach(producto => {
+            const div = document.createElement("div");
+            div.className = "producto";
+            div.dataset.id = producto.idProducto;
 
-            section.innerHTML += `
-    <div class="producto" data-id="${producto.idProducto}">
-        <p class="id">#${producto.idProducto}</p>
+            div.innerHTML = `
+                <p class="id">#${producto.idProducto}</p>
 
-        <div class="imagen-container">
-            <input type="file" class="imagen-input" accept="image/*">
+                <div class="imagen-container">
+                    <input type="file" class="imagen-input" accept="image/*">
+                    <img class="imagen-preview" src="${producto.imagen}" alt="${producto.nombre}">
+                </div>
 
-            <img class="imagen-preview" src="${producto.imagen}" alt="${producto.nombre}">
-        </div>
+                <div class="campo">
+                    <p class="label">Nombre</p>
+                    <input type="text" class="nombre-Upd" value="${producto.nombre}">
+                </div>
 
-        <div class="campo">
-            <p class="nombre">Nombre</p>
-            <input type="text" class="nombre-Upd" value="${producto.nombre}">
-        </div>
+                <div class="campo">
+                    <p class="label">Descripción</p>
+                    <input type="text" class="descripcion-Upd" value="${producto.descripcion}">
+                </div>
 
-        <div class="campo">
-            <p class="descripcion">Descripción</p>
-            <input type="text" class="descripcion-Upd" value="${producto.descripcion}">
-        </div>
+                <div class="campo">
+                    <p class="label">Precio</p>
+                    <input type="number" class="precio-Upd" value="${producto.precio}">
+                </div>
 
-        <div class="campo">
-            <p class="precio">Precio</p>
-            <input type="number" class="precio-Upd" value="${producto.precio}">
-        </div>
+                <div class="campo">
+                    <p class="label">Proveedor</p>
+                    <div class="proveedor-container"></div>
+                </div>
 
-        <div class="campo">
-            <p class="proveedor">Proveedor</p>
-            <div class="proveedor-container"></div>
-        </div>
+                <div class="campo">
+                    <button class="update">Actualizar</button>
+                    <button class="delete">Eliminar</button>
+                </div>
+            `;
 
-        <div class="campo">
-            <button class="update">
-                Actualizar
-            </button>
+            section.appendChild(div);
 
-            <button class="delete">
-                Eliminar
-            </button>
-        </div>
-    </div>
-    `;
-            // Clonar la lista de proveedores para cada producto
+            // Clonar la lista de proveedores para este producto y preseleccionar
             const select = lista.clone();
-
-            // Establecer el proveedor seleccionado según el producto
             select.value = producto.idProveedor;
-
-            document
-                .querySelector(
-                    `.producto[data-id="${producto.idProducto}"] .proveedor-container`
-                )
-                .appendChild(select);
+            div.querySelector(".proveedor-container").appendChild(select);
         });
     });
 
+// ─── Delegación de clicks (update / delete) ──────────────────────────────────
+
 section.addEventListener("click", e => {
-
-    const card =
-        e.target.closest(".producto");
-
+    const card = e.target.closest(".producto");
     if (!card) return;
 
-    const id =
-        card.dataset.id;
+    const id = card.dataset.id;
 
-    if (e.target.classList.contains("update")) {
-        actualizarProducto(id);
-    }
-
-    if (e.target.classList.contains("delete")) {
-        eliminarProducto(id);
-    }
+    if (e.target.classList.contains("update")) actualizarProducto(id);
+    if (e.target.classList.contains("delete")) eliminarProducto(id);
 });
 
-// preview imagen
+// ─── Preview de imagen en tarjetas existentes ────────────────────────────────
+
 section.addEventListener("change", e => {
+    if (!e.target.classList.contains("imagen-input")) return;
 
-    if (!e.target.classList.contains("imagen-input"))
-        return;
-
-    const card =
-        e.target.closest(".producto");
-
-    const file =
-        e.target.files[0];
-
+    const card = e.target.closest(".producto");
+    const file = e.target.files[0];
     if (!file) return;
 
-    const img =
-        card.querySelector(".imagen-preview");
-
-    img.src =
-        URL.createObjectURL(file);
+    card.querySelector(".imagen-preview").src = URL.createObjectURL(file);
 });
 
+// ─── Actualizar producto ──────────────────────────────────────────────────────
+
 function actualizarProducto(id) {
+    const card = document.querySelector(`.producto[data-id="${id}"]`);
 
-    const card =
-        document.querySelector(
-            `.producto[data-id="${id}"]`
-        );
+    const imagen = card.querySelector(".imagen-input").files[0];
+    const formData = new FormData();
 
-    const imagen =
-        card.querySelector(
-            ".imagen-input"
-        ).files[0];
+    formData.append("id", id);
+    formData.append("nombre", card.querySelector(".nombre-Upd").value);
+    formData.append("descripcion", card.querySelector(".descripcion-Upd").value);
+    formData.append("precio", card.querySelector(".precio-Upd").value);
+    formData.append("proveedor", card.querySelector(".lista-proveedores").value);
+    formData.append("table", "productos");
 
-    const formData =
-        new FormData();
+    if (imagen) formData.append("imagen", imagen);
 
-    formData.append(
-        "id",
-        id
-    );
-
-    formData.append(
-        "nombre",
-        card.querySelector(".nombre-Upd").value
-    );
-
-    formData.append(
-        "descripcion",
-        card.querySelector(".descripcion-Upd").value
-    );
-
-    formData.append(
-        "precio",
-        card.querySelector(".precio-Upd").value
-    );
-
-    formData.append(
-        "proveedor",
-        card.querySelector(".lista-proveedores").value
-    );
-
-    formData.append(
-        "table",
-        "productos"
-    );
-
-    // solo enviar si cambiaron imagen
-    if (imagen) {
-        formData.append(
-            "imagen",
-            imagen
-        );
-    }
-
-    fetch("./php/update.php", {
-        method: "POST",
-        body: formData
-    })
+    fetch("./php/update.php", { method: "POST", body: formData })
         .then(r => r.text())
-        .then(response => {
-            alert(response);
-        });
+        .then(response => alert(response));
 }
 
-function eliminarProducto(id) {
+// ─── Eliminar producto ────────────────────────────────────────────────────────
 
+function eliminarProducto(id) {
     if (!confirm("¿Eliminar producto?")) return;
 
     fetch("./php/delete.php", {
         method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-            id: id,
+            id,
             where: `idProducto = ${id}`,
             table: "productos"
         })
     })
         .then(r => r.text())
         .then(response => {
-
             alert(response);
-
-            document
-                .querySelector(
-                    `.producto[data-id="${id}"]`
-                )
-                .remove();
+            document.querySelector(`.producto[data-id="${id}"]`).remove();
         });
 }
 
-//Agregar Producto
-const main = document.getElementById("content");
-const title = document.createElement("h2");
-const div = document.createElement("div");
+// ─── Sección "Agregar Producto" ───────────────────────────────────────────────
 
-section.className = "agregar";
+const agregar = document.createElement("section");
+agregar.className = "agregar";
+section.appendChild(agregar);
 
-title.innerHTML = "Agregar Producto";
-title.className = "title";
+agregar.innerHTML = `
+    <div class="productos-form">
+        <h2>Agregar Producto</h2>
 
-section.appendChild(title);
-section.appendChild(div);
+        <div class="imagen-container">
+            <input type="file" class="imagen-input" accept="image/*">
+            <img class="imagen-preview-agregar" style="display:block;">
+        </div>
 
-div.className = "productos-form";
+        <div class="campo">
+            <p class="label">Nombre</p>
+            <input type="text" class="nombre-nuevo" placeholder="Nombre del producto">
+        </div>
 
-div.innerHTML = `
-    <input type="text" id="producto-nombre" placeholder="Nombre">
-    <input type="text" id="producto-descripcion" placeholder="Descripcion">
-    <input type="number" id="producto-precio" placeholder="Precio">
-    <div class="proveedor-container"></div>
-    <input type="file" id="producto-imagen" accept="image/*">
-    <button id="agregar-producto">
-        Agregar
-    </button>
+        <div class="campo">
+            <p class="label">Descripción</p>
+            <input type="text" class="descripcion-nueva" placeholder="Descripción del producto">
+        </div>
+
+        <div class="campo">
+            <p class="label">Precio</p>
+            <input type="number" class="precio-nuevo" placeholder="Precio del producto">
+        </div>
+
+        <div class="campo">
+            <p class="label">Proveedor</p>
+            <div class="proveedor-container-nuevo"></div>
+        </div>
+
+        <div class="campo">
+            <button class="btn-agregar">Agregar</button>
+        </div>
+    </div>
 `;
 
-const select = lista.clone();
-select.value = -1;
+// Clonar lista de proveedores para el form de agregar
+const selectNuevo = lista.clone();
+agregar.querySelector(".proveedor-container-nuevo").appendChild(selectNuevo);
 
-document
-    .querySelector(
-        `.productos-form .proveedor-container`
-    )
-    .appendChild(select);
+// Preview de imagen en el form de agregar
+agregar.querySelector(".imagen-input").addEventListener("change", e => {
+    const file = e.target.files[0];
+    if (!file) return;
 
-// Fetch agregar producto
-document
-    .getElementById("agregar-producto")
-    .addEventListener("click", () => {
+    const img = agregar.querySelector(".imagen-preview-agregar");
+    img.src = URL.createObjectURL(file);
+    img.style.display = "block";
+});
 
-        const nombre =
-            document.getElementById("producto-nombre").value;
+// Enviar nuevo producto
+agregar.querySelector(".btn-agregar").addEventListener("click", () => {
+    const nombre = agregar.querySelector(".nombre-nuevo").value.trim();
+    const descripcion = agregar.querySelector(".descripcion-nueva").value.trim();
+    const precio = agregar.querySelector(".precio-nuevo").value;
+    const proveedor = agregar.querySelector(".lista-proveedores").value;
+    const imagen = agregar.querySelector(".imagen-input-agregar").files[0];
 
-        const descripcion =
-            document.getElementById("producto-descripcion").value;
+    if (!nombre || !descripcion || !precio || !imagen) {
+        alert("Por favor completa todos los campos.");
+        return;
+    }
 
-        const precio =
-            document.getElementById("producto-precio").value;
+    const formData = new FormData();
+    formData.append("nombre", nombre);
+    formData.append("descripcion", descripcion);
+    formData.append("precio", precio);
+    formData.append("proveedor", proveedor);
+    formData.append("imagen", imagen);
+    formData.append("table", "productos");
 
-        const proveedor =
-            document.querySelector(
-                ".productos-form .lista-proveedores"
-            ).value;
-
-        const imagen =
-            document.getElementById("producto-imagen").files[0];
-
-        const formData = new FormData();
-
-        formData.append(
-            "nombre",
-            nombre
-        );
-
-        formData.append(
-            "descripcion",
-            descripcion
-        );
-
-        formData.append(
-            "precio",
-            precio
-        );
-
-        formData.append(
-            "proveedor",
-            proveedor
-        );
-
-        formData.append(
-            "imagen",
-            imagen
-        );
-
-        formData.append(
-            "table",
-            "productos"
-        );
-
-        fetch("./php/insert.php", {
-            method: "POST",
-            body: formData
+    fetch("./php/insert.php", { method: "POST", body: formData })
+        .then(r => r.text())
+        .then(response => {
+            alert(response);
+            location.reload();
         })
-            .then(r => r.text())
-            .then(response => {
-
-                alert(response);
-
-                // limpiar inputs
-                document.getElementById("producto-nombre").value = "";
-                document.getElementById("producto-descripcion").value = "";
-                document.getElementById("producto-precio").value = "";
-                document.getElementById("producto-imagen").value = "";
-                select.value = -1;
-
-                // recargar lista
-                location.reload();
-            })
-            .catch(error => {
-                console.error(error);
-                alert("Error al agregar producto");
-            });
-    });
+        .catch(error => {
+            console.error(error);
+            alert("Error al agregar producto");
+        });
+});

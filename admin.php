@@ -30,14 +30,6 @@
 
         </section>
         <script src="js/admin/proveedores.js" type="module"></script>
-        <h2>Agregar Proveedores</h2>
-        <form method="POST" action="php/insert.php">
-            <input type="text" name="nombre" id="nombre" placeholder="Nombre">
-            <input type="text" name="telefono" id="telefono" placeholder="Telefono">
-            <input type="email" name="correo" id="correo" placeholder="Correo Electrónico">
-            <input type="text" name="direccion" id="direccion" placeholder="Direccion">
-            <input type="hidden" name="action" value="proveedor">
-            <button type="submit">Agregar</button>
     </main>
     <footer>
 
