@@ -20,32 +20,35 @@ fetch("./php/get.php", {
 })
     .then(r => r.json())
     .then(data => {
+        console.log(data);
         data.forEach(producto => {
+
             const div = document.createElement("div");
             div.className = "producto";
             div.dataset.id = producto.idProducto;
+            div.dataset.proveedor = producto.idProveedor;
 
             div.innerHTML = `
                 <p class="id">#${producto.idProducto}</p>
 
                 <div class="imagen-container">
                     <input type="file" class="imagen-input" accept="image/*">
-                    <img class="imagen-preview" src="${producto.imagen}" alt="${producto.nombre}">
+                    <img class="imagen-preview" name="imagen" src="${producto.imagen}" alt="${producto.nombre}">
                 </div>
 
                 <div class="campo">
                     <p class="label">Nombre</p>
-                    <input type="text" class="nombre-Upd" value="${producto.nombre}">
+                    <input type="text" class="nombre-Upd" name="nombre" value="${producto.nombre}">
                 </div>
 
                 <div class="campo">
                     <p class="label">Descripción</p>
-                    <input type="text" class="descripcion-Upd" value="${producto.descripcion}">
+                    <input type="text" class="descripcion-Upd" name="descripcion" value="${producto.descripcion}">
                 </div>
 
                 <div class="campo">
                     <p class="label">Precio</p>
-                    <input type="number" class="precio-Upd" value="${producto.precio}">
+                    <input type="number" class="precio-Upd" name="precio" value="${producto.precio}">
                 </div>
 
                 <div class="campo">
@@ -147,22 +150,22 @@ agregar.innerHTML = `
 
         <div class="imagen-container">
             <input type="file" class="imagen-input-agregar" accept="image/*">
-            <img class="imagen-preview-agregar" style="display:block;">
+            <img class="imagen-preview-agregar" name="imagen" style="display:block;">
         </div>
 
         <div class="campo">
             <p class="label">Nombre</p>
-            <input type="text" class="nombre-nuevo" placeholder="Nombre del producto">
+            <input type="text" class="nombre-nuevo" name="nombre" placeholder="Nombre del producto">
         </div>
 
         <div class="campo">
             <p class="label">Descripción</p>
-            <input type="text" class="descripcion-nueva" placeholder="Descripción del producto">
+            <input type="text" class="descripcion-nueva" name="descripcion" placeholder="Descripción del producto">
         </div>
 
         <div class="campo">
             <p class="label">Precio</p>
-            <input type="number" class="precio-nuevo" placeholder="Precio del producto">
+            <input type="number" class="precio-nuevo" name="precio" placeholder="Precio del producto">
         </div>
 
         <div class="campo">
@@ -198,8 +201,14 @@ agregar.querySelector(".btn-agregar").addEventListener("click", () => {
     const proveedor = agregar.querySelector(".lista-proveedores").value;
     const imagen = agregar.querySelector(".imagen-input-agregar").files[0];
 
-    if (!nombre || !descripcion || !precio || !imagen) {
-        alert("Por favor completa todos los campos.");
+    if (!nombre || !descripcion || !precio || !imagen || !proveedor) {
+        let message = "Por favor completa todos los campos. \n";
+        if (!nombre) message += "Por favor ingresa el nombre del producto. \n";
+        if (!descripcion) message += "Por favor ingresa la descripción del producto. \n";
+        if (!precio) message += "Por favor ingresa el precio del producto. \n";
+        if (!imagen) message += "Por favor selecciona una imagen para el producto. \n";
+        if (!proveedor) message += "Por favor selecciona un proveedor para el producto. \n";
+        alert(message);
         return;
     }
 

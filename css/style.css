@@ -599,32 +599,30 @@ body {
    SECCIÓN AGREGAR PROVEEDOR
 ═══════════════════════════════════════════ */
 
+/* Contenedor */
 #agregar-proveedor {
-    background: #ffffff;
-    border-radius: 18px;
-    padding: 28px;
-    margin: 0 auto 30px;
+    position: relative;
+    padding: 28px 28px 70px;
+}
 
-    box-shadow:
-        0 6px 18px rgba(0, 0, 0, .08),
-        0 2px 6px rgba(0, 0, 0, .04);
+/* Título Agregar Proveedor */
+.proveedores-form h2 {
+    position: absolute;
+    left: 16px;
+    bottom: 18px;
+
+    margin: 0;
 }
 
 /* Header separado */
 .proveedores-form .header {
     display: flex;
-    flex-direction: row-reverse;
+    position: relative;
     justify-content: space-between;
     align-items: center;
     gap: 16px;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
     flex-wrap: wrap;
-}
-
-.proveedores-form h2 {
-    margin: 0 0 24px;
-    font-size: 1.25rem;
-    color: #1f2937;
 }
 
 /* Campos */
@@ -663,31 +661,39 @@ body {
     box-shadow: 0 0 0 4px rgba(37, 99, 235, .12);
 }
 
+/* Último campo (botón) */
 .proveedores-form .campo:last-child {
     margin-top: 18px;
     margin-bottom: 0;
+
     display: flex;
     justify-content: flex-end;
 }
 
-/* Botón */
+/* Botón agregar */
 .proveedores-form .btn-agregar {
+    position: absolute;
+    bottom: 16px;
+    left: 200px;
+
     border: none;
     border-radius: 12px;
     padding: 11px 20px;
+
     font-size: .95rem;
     font-weight: 600;
     cursor: pointer;
 
-    background: linear-gradient(135deg, #16a34a, #15803d);
+    background:
+        linear-gradient(135deg, #16a34a, #15803d);
     color: white;
+
+    box-shadow:
+        0 6px 14px rgba(22, 163, 74, .25);
 
     transition:
         transform .18s ease,
         box-shadow .18s ease;
-
-    box-shadow:
-        0 6px 14px rgba(22, 163, 74, .25);
 }
 
 .proveedores-form .btn-agregar::before {
@@ -695,6 +701,265 @@ body {
 }
 
 .proveedores-form .btn-agregar:hover {
+    transform: translateY(-2px);
+    box-shadow:
+        0 10px 20px rgba(22, 163, 74, .35);
+}
+
+/* ═══════════════════════════════════════════
+   TARJETA CLIENTE (edición)
+═══════════════════════════════════════════ */
+
+.cliente {
+    background: #ffffff;
+    border-radius: 18px;
+    padding: 20px;
+    margin-bottom: 25px;
+    position: relative;
+
+    box-shadow:
+        0 6px 18px rgba(0, 0, 0, .08),
+        0 2px 6px rgba(0, 0, 0, .04);
+
+    transition:
+        transform .25s ease,
+        box-shadow .25s ease;
+}
+
+.cliente:hover {
+    transform: translateY(-4px);
+
+    box-shadow:
+        0 12px 28px rgba(0, 0, 0, .12),
+        0 4px 10px rgba(0, 0, 0, .06);
+}
+
+/* — ID badge — */
+.cliente .id {
+    display: inline-block;
+    margin: 0 0 14px;
+    padding: 4px 12px;
+
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
+    color: white;
+
+    border-radius: 999px;
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: .5px;
+
+    box-shadow: 0 4px 10px rgba(37, 99, 235, .25);
+}
+
+/* — Campos — */
+.cliente .campo {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 12px;
+}
+
+.cliente .campo .label {
+    margin: 0;
+    min-width: 90px;
+    font-weight: 600;
+    color: #374151;
+}
+
+.cliente .campo input {
+    flex: 1;
+    padding: 10px 14px;
+    border: 1px solid #d1d5db;
+    border-radius: 10px;
+    background: #f9fafb;
+    color: #111827;
+    font-size: .95rem;
+    outline: none;
+    transition:
+        border-color .2s,
+        box-shadow .2s,
+        background .2s;
+}
+
+.cliente .campo input:focus {
+    border-color: #2563eb;
+    background: white;
+    box-shadow: 0 0 0 4px rgba(37, 99, 235, .12);
+}
+
+.cliente .campo input::placeholder {
+    color: #9ca3af;
+}
+
+/* — Botones — */
+.cliente .campo:last-child {
+    margin-top: 6px;
+    margin-bottom: 0;
+}
+
+.cliente button {
+    border: none;
+    border-radius: 12px;
+    padding: 11px 20px;
+    font-size: .95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition:
+        transform .18s ease,
+        box-shadow .18s ease;
+}
+
+.cliente button:hover {
+    transform: translateY(-2px);
+}
+
+.cliente button:active {
+    transform: scale(.97);
+}
+
+.cliente .update {
+    background: linear-gradient(135deg, #16a34a, #15803d);
+    color: white;
+    box-shadow:
+        0 6px 14px rgba(22, 163, 74, .25);
+}
+
+.cliente .update:hover {
+    box-shadow:
+        0 10px 20px rgba(22, 163, 74, .35);
+}
+
+.cliente .update::before {
+    content: "💾 ";
+}
+
+.cliente .delete {
+    background: linear-gradient(135deg, #dc2626, #b91c1c);
+    color: white;
+    box-shadow:
+        0 6px 14px rgba(220, 38, 38, .25);
+}
+
+.cliente .delete:hover {
+    box-shadow:
+        0 10px 20px rgba(220, 38, 38, .35);
+}
+
+.cliente .delete::before {
+    content: "🗑 ";
+}
+
+
+/* ═══════════════════════════════════════════
+   SECCIÓN AGREGAR CLIENTE
+═══════════════════════════════════════════ */
+
+/* Contenedor */
+#agregar-cliente {
+    position: relative;
+    padding: 28px 28px 70px;
+}
+
+/* Título */
+.clientes-form h2 {
+    position: absolute;
+    left: 16px;
+    bottom: 18px;
+    margin: 0;
+}
+
+/* Header */
+.clientes-form .header {
+    display: flex;
+    position: relative;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+}
+
+/* Campos */
+.clientes-form .campo {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 12px;
+}
+
+.clientes-form .campo .label {
+    margin: 0;
+    min-width: 90px;
+    font-weight: 600;
+    color: #374151;
+}
+
+.clientes-form .campo input {
+    flex: 1;
+    padding: 10px 14px;
+    border: 1px solid #d1d5db;
+    border-radius: 10px;
+    background: #f9fafb;
+    color: #111827;
+    font-size: .95rem;
+    outline: none;
+    transition:
+        border-color .2s,
+        box-shadow .2s,
+        background .2s;
+}
+
+.clientes-form .campo input:focus {
+    border-color: #2563eb;
+    background: white;
+    box-shadow:
+        0 0 0 4px rgba(37, 99, 235, .12);
+}
+
+.clientes-form .campo input::placeholder {
+    color: #9ca3af;
+}
+
+/* Último campo (botón) */
+.clientes-form .campo:last-child {
+    margin-top: 18px;
+    margin-bottom: 0;
+
+    display: flex;
+    justify-content: flex-end;
+}
+
+/* Botón agregar */
+.clientes-form .btn-agregar {
+    position: absolute;
+    bottom: 16px;
+    left: 175px;
+
+    border: none;
+    border-radius: 12px;
+    padding: 11px 20px;
+
+    font-size: .95rem;
+    font-weight: 600;
+    cursor: pointer;
+
+    background:
+        linear-gradient(135deg, #16a34a, #15803d);
+    color: white;
+
+    box-shadow:
+        0 6px 14px rgba(22, 163, 74, .25);
+
+    transition:
+        transform .18s ease,
+        box-shadow .18s ease;
+}
+
+.clientes-form .btn-agregar::before {
+    content: "➕ ";
+}
+
+.clientes-form .btn-agregar:hover {
     transform: translateY(-2px);
     box-shadow:
         0 10px 20px rgba(22, 163, 74, .35);
@@ -725,6 +990,8 @@ body {
     padding: 20px 20px 20px 190px;
     margin-bottom: 0;
 
+    padding: 20px;
+
     position: relative;
     min-height: 190px;
 
@@ -751,12 +1018,12 @@ body {
 ═══════════════════════════════════════════ */
 
 #catalogo .catalogo-imagen {
-    position: absolute;
-    top: 20px;
-    left: 20px;
-
-    width: 150px;
-    height: 150px;
+    position: relative;
+    top: auto;
+    left: auto;
+    width: 100%;
+    height: 220px;
+    margin-bottom: 16px;
 
     object-fit: cover;
     object-position: center;
@@ -832,25 +1099,21 @@ body {
    RESPONSIVE CATÁLOGO
 ═══════════════════════════════════════════ */
 
-@media (max-width: 720px) {
+@media (max-width: 1600px) {
+    #catalogo {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
 
+@media (max-width: 1324px) {
+    #catalogo {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 720px) {
     #catalogo {
         grid-template-columns: 1fr;
-    }
-
-    #catalogo .producto {
-        padding: 20px;
-    }
-
-    #catalogo .catalogo-imagen {
-        position: relative;
-        top: auto;
-        left: auto;
-
-        width: 100%;
-        height: 220px;
-
-        margin-bottom: 16px;
     }
 }
 
@@ -870,6 +1133,7 @@ body {
     line-height: 1.55;
 
     max-height: 72px;
+    min-height: 72px;
     overflow: hidden;
 
     transition: max-height .35s ease;
@@ -971,4 +1235,96 @@ body {
 /* Rotación */
 #catalogo .descripcion-container.expandida .expandir-desc {
     transform: rotate(180deg);
+}
+
+/* ═══════════════════════════════════════════
+   PROVEEDOR HOVER INFO
+═══════════════════════════════════════════ */
+
+#catalogo .proveedor-wrapper {
+    position: relative;
+}
+
+#catalogo .proveedor {
+    margin: 0;
+    color: #4b5563;
+    font-size: .95rem;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+#catalogo .proveedor::before {
+    content: "🏢 ";
+}
+
+/* Popup oculto */
+#catalogo .proveedor-info {
+    position: absolute;
+    bottom: calc(100% + 12px);
+    left: 0;
+
+    min-width: 260px;
+    padding: 14px 16px;
+
+    background: #fff;
+    border-radius: 14px;
+
+    box-shadow:
+        0 10px 30px rgba(0, 0, 0, .14),
+        0 4px 10px rgba(0, 0, 0, .08);
+
+    border: 1px solid #e5e7eb;
+
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+
+    transition:
+        opacity .25s ease,
+        transform .25s ease,
+        visibility .25s ease;
+
+    z-index: 30;
+}
+
+/* Flechita */
+#catalogo .proveedor-info::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 18px;
+
+    border: 8px solid transparent;
+    border-top-color: #fff;
+}
+
+/* Hover */
+#catalogo .proveedor-wrapper:hover .proveedor-info {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+/* Texto */
+#catalogo .proveedor-info p {
+    margin: 0 0 8px;
+    color: #4b5563;
+    font-size: .92rem;
+    line-height: 1.4;
+}
+
+#catalogo .proveedor-info p:last-child {
+    margin-bottom: 0;
+}
+
+#catalogo .telefono::before {
+    content: "📞 ";
+}
+
+#catalogo .correo::before {
+    content: "✉️ ";
+}
+
+#catalogo .direccion::before {
+    content: "📍 ";
 }

@@ -5,23 +5,12 @@ include("../php/conexion.php");
 if ($_POST) {
 
     switch ($_POST["table"]) {
-
         case "productos":
-
-            $id =
-                $_POST["id"];
-
-            $nombre =
-                $_POST["nombre"];
-
-            $descripcion =
-                $_POST["descripcion"];
-
-            $precio =
-                $_POST["precio"];
-
-            $proveedor =
-                $_POST["proveedor"];
+            $id = $_POST["id"];
+            $nombre = $_POST["nombre"];
+            $descripcion = $_POST["descripcion"];
+            $precio = $_POST["precio"];
+            $proveedor = $_POST["proveedor"];
 
             // Obtener imagen actual
             $query = mysqli_query(
@@ -33,15 +22,9 @@ if ($_POST) {
 
             $row = mysqli_fetch_assoc($query);
 
-            $imagenActual =
-                $row["imagen"];
-
-            $rutaActual =
-                "C:/xampp/htdocs/PFSM4/" .
-                $imagenActual;
-
-            $imagenFinal =
-                $imagenActual;
+            $imagenActual = $row["imagen"];
+            $rutaActual = "C:/xampp/htdocs/PFSM4/" . $imagenActual;
+            $imagenFinal = $imagenActual;
 
             // nombre limpio
             $nombreLimpio =
@@ -51,7 +34,7 @@ if ($_POST) {
                     $nombre
                 );
 
-            // SI CAMBIÓ IMAGEN
+            // Si se cambio la imagen -> borrar anterior y guardar nueva
             if (
                 isset($_FILES["imagen"]) &&
                 $_FILES["imagen"]["error"] == 0
@@ -69,103 +52,48 @@ if ($_POST) {
                 }
 
                 // guardar nueva
-                $imagenNueva =
-                    copyImage(
-                        $_FILES["imagen"],
-                        $nombre
-                    );
+                $imagenNueva = copyImage(
+                    $_FILES["imagen"],
+                    $nombre
+                );
 
                 if (!$imagenNueva) {
-                    die(
-                        "Error al guardar imagen"
-                    );
+                    die("Error al guardar imagen");
                 }
 
-                $imagenFinal =
-                    $imagenNueva;
+                $imagenFinal = $imagenNueva;
             }
 
-            // SI NO CAMBIÓ IMAGEN
-            // pero cambió nombre -> renombrar archivo
+            // Si no se cambio la imagen, pero cambió el nombre -> renombrar archivo
             else {
+                if (file_exists($rutaActual)) {
 
-                if (
-                    file_exists(
-                        $rutaActual
-                    )
-                ) {
+                    $extension = pathinfo($rutaActual, PATHINFO_EXTENSION);
+                    $nuevoArchivo = "img/productos/" . $nombreLimpio . "." . $extension;
+                    $rutaNueva = "C:/xampp/htdocs/PFSM4/" . $nuevoArchivo;
 
-                    $extension =
-                        pathinfo(
-                            $rutaActual,
-                            PATHINFO_EXTENSION
-                        );
+                    if ($imagenActual != $nuevoArchivo) {
 
-                    $nuevoArchivo =
-                        "img/productos/" .
-                        $nombreLimpio .
-                        "." .
-                        $extension;
+                        rename($rutaActual, $rutaNueva);
 
-                    $rutaNueva =
-                        "C:/xampp/htdocs/PFSM4/" .
-                        $nuevoArchivo;
-
-                    if (
-                        $imagenActual !=
-                        $nuevoArchivo
-                    ) {
-
-                        rename(
-                            $rutaActual,
-                            $rutaNueva
-                        );
-
-                        $imagenFinal =
-                            $nuevoArchivo;
+                        $imagenFinal = $nuevoArchivo;
                     }
                 }
             }
 
-            $sql =
-                "UPDATE productos SET
-        nombre = '" .
-                mysqli_real_escape_string(
-                    $conn,
-                    $nombre
-                ) .
-                "',
-        descripcion = '" .
-                mysqli_real_escape_string(
-                    $conn,
-                    $descripcion
-                ) .
-                "',
-        precio = '" .
-                mysqli_real_escape_string(
-                    $conn,
-                    $precio
-                ) .
-                "',
-        idProveedor = '" .
-                mysqli_real_escape_string(
-                    $conn,
-                    $proveedor
-                ) .
-                "',
-        imagen = '" .
-                mysqli_real_escape_string(
-                    $conn,
-                    $imagenFinal
-                ) .
-                "'
-        WHERE idProducto = $id";
+            $sql = "UPDATE productos SET
+                nombre = '" . mysqli_real_escape_string($conn, $nombre) . "',
+                descripcion = '" . mysqli_real_escape_string($conn, $descripcion) . "',
+                precio = '" . mysqli_real_escape_string($conn, $precio) . "',
+                idProveedor = '" . mysqli_real_escape_string($conn, $proveedor) . "',
+                imagen = '" . mysqli_real_escape_string($conn, $imagenFinal) . "'
+                WHERE idProducto = $id";
 
             break;
 
         case "proveedores":
 
-            $id = $_POST["id"];
+            $id = $_POST["idProveedor"];
             $nombreProveedor = $_POST["nombreProveedor"];
             $telefono = $_POST["telefono"];
             $correo = $_POST["correo"];
@@ -178,6 +106,23 @@ if ($_POST) {
                 correo = '" . mysqli_real_escape_string($conn, $correo) . "',
                 direccion = '" . mysqli_real_escape_string($conn, $direccion) . "'
                 WHERE idProveedor = $id";
+
+            break;
+
+        case "clientes":
+            $id = $_POST["idCliente"];
+            $nombre = $_POST["nombre"];
+            $telefono = $_POST["telefono"];
+            $correo = $_POST["correo"];
+            $direccion = $_POST["direccion"];
+
+            $sql =
+                "UPDATE clientes SET
+                nombre = '" . mysqli_real_escape_string($conn, $nombre) . "',
+                telefono = '" . mysqli_real_escape_string($conn, $telefono) . "',
+                correo = '" . mysqli_real_escape_string($conn, $correo) . "',
+                direccion = '" . mysqli_real_escape_string($conn, $direccion) . "'
+                WHERE idCliente = $id";
 
             break;
     }

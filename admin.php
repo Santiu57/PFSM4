@@ -25,11 +25,18 @@
 
         </section>
         <script src="js/admin/productos.js" type="module"></script>
+
         <h2>Proveedores</h2>
         <section id="proveedores">
 
         </section>
         <script src="js/admin/proveedores.js" type="module"></script>
+
+        <h2>Clientes</h2>
+        <section id="clientes">
+
+        </section>
+        <script src="js/admin/clientes.js" type="module"></script>
     </main>
     <footer>
 

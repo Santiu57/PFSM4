@@ -24,22 +24,22 @@ fetch("./php/get.php", {
 
                 <div class="campo">
                     <p class="label">Nombre</p>
-                    <input type="text" class="nombre-Upd" value="${proveedor.nombreProveedor}">
+                    <input type="text" name="nombreProveedor" class="nombre-Upd" value="${proveedor.nombreProveedor}">
                 </div>
 
                 <div class="campo">
                     <p class="label">Teléfono</p>
-                    <input type="text" class="telefono-Upd" value="${proveedor.telefono}">
+                    <input type="text" name="telefono" class="telefono-Upd" value="${proveedor.telefono}">
                 </div>
 
                 <div class="campo">
                     <p class="label">Correo</p>
-                    <input type="email" class="correo-Upd" value="${proveedor.correo}">
+                    <input type="email" name="correo" class="correo-Upd" value="${proveedor.correo}">
                 </div>
 
                 <div class="campo">
                     <p class="label">Dirección</p>
-                    <input type="text" class="direccion-Upd" value="${proveedor.direccion}">
+                    <input type="text" name="direccion" class="direccion-Upd" value="${proveedor.direccion}">
                 </div>
 
                 <div class="campo">
@@ -64,18 +64,6 @@ section.addEventListener("click", e => {
     if (e.target.classList.contains("delete")) eliminarProveedor(id);
 });
 
-// ─── Preview de imagen en tarjetas existentes ────────────────────────────────
-
-section.addEventListener("change", e => {
-    if (!e.target.classList.contains("imagen-input")) return;
-
-    const card = e.target.closest(".proveedor");
-    const file = e.target.files[0];
-    if (!file) return;
-
-    card.querySelector(".imagen-preview").src = URL.createObjectURL(file);
-});
-
 // ─── Actualizar proveedor ──────────────────────────────────────────────────────
 
 function actualizarProveedor(id) {
@@ -92,19 +80,21 @@ function actualizarProveedor(id) {
 
     fetch("./php/update.php", { method: "POST", body: formData })
         .then(r => r.text())
-        .then(response => alert(response));
+        .then(response => {
+            alert(response);
+            dispatchEvent(new Event("updateProveedores"));
+        });
 }
 
 // ─── Eliminar proveedor ────────────────────────────────────────────────────────
 
 function eliminarProveedor(id) {
-    if (!confirm("¿Eliminar proveedor?")) return;
+    if (!confirm("¿Eliminar proveedor?\nTodos los productos asociados también serán eliminados.")) return;
 
     fetch("./php/delete.php", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-            id,
             where: `idProveedor = ${id}`,
             table: "proveedores"
         })
@@ -112,7 +102,48 @@ function eliminarProveedor(id) {
         .then(r => r.text())
         .then(response => {
             alert(response);
-            document.querySelector(`.proveedor[data-id="${id}"]`).remove();
+
+            eliminarProductosAsociados(id);
+
+            document
+                .querySelector(`.proveedor[data-id="${id}"]`)
+                ?.remove();
+
+            dispatchEvent(new Event("updateProveedores"));
+        });
+}
+
+// ─── Eliminar productos asociados ──────────────────────────────────────────────
+
+function eliminarProductosAsociados(idProveedor) {
+
+    const productos = document.querySelectorAll(
+        `.producto[data-proveedor="${idProveedor}"]`
+    );
+
+    productos.forEach(producto => {
+        const idProducto = producto.dataset.id;
+        eliminarProducto(idProducto);
+    });
+}
+
+// ─── Eliminar producto ─────────────────────────────────────────────────────────
+
+function eliminarProducto(id) {
+    fetch("./php/delete.php", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            where: `idProducto = ${id}`,
+            table: "productos"
+        })
+    })
+        .then(r => r.text())
+        .then(response => {
+            console.log(response);
+            document
+                .querySelector(`.producto[data-id="${id}"]`)
+                ?.remove();
         });
 }
 
@@ -129,22 +160,22 @@ agregar.innerHTML = `
 
         <div class="campo">
             <p class="label">Nombre</p>
-            <input type="text" class="nombre-nuevo" placeholder="Nombre del proveedor">
+            <input type="text" class="nombre-nuevo" name="nombreProveedor" placeholder="Nombre del proveedor">
         </div>
 
         <div class="campo">
             <p class="label">Teléfono</p>
-            <input type="text" class="telefono-nuevo" placeholder="Teléfono del proveedor">
+            <input type="text" class="telefono-nuevo" name="telefono" placeholder="Teléfono del proveedor">
         </div>
 
         <div class="campo">
             <p class="label">Correo</p>
-            <input type="email" class="correo-nuevo" placeholder="Correo del proveedor">
+            <input type="email" class="correo-nuevo" name="correo" placeholder="Correo del proveedor">
         </div>
 
         <div class="campo">
             <p class="label">Dirección</p>
-            <input type="text" class="direccion-nueva" placeholder="Dirección del proveedor">
+            <input type="text" class="direccion-nueva" name="direccion" placeholder="Dirección del proveedor">
         </div>
 
         <div class="campo">
@@ -161,7 +192,12 @@ agregar.querySelector(".btn-agregar").addEventListener("click", () => {
     const direccion = agregar.querySelector(".direccion-nueva").value.trim();
 
     if (!nombre || !telefono || !correo || !direccion) {
-        alert("Por favor completa todos los campos.");
+        let message = "Por favor completa todos los campos. \n";
+        if (!nombre) message += "Por favor ingresa el nombre del proveedor. \n";
+        if (!telefono) message += "Por favor ingresa el teléfono del proveedor. \n";
+        if (!correo) message += "Por favor ingresa el correo del proveedor. \n";
+        if (!direccion) message += "Por favor ingresa la dirección del proveedor. \n";
+        alert(message);
         return;
     }
 
@@ -177,9 +213,11 @@ agregar.querySelector(".btn-agregar").addEventListener("click", () => {
         .then(response => {
             alert(response);
             location.reload();
+            dispatchEvent(new Event("updateProveedores"));
         })
         .catch(error => {
             console.error(error);
             alert("Error al agregar proveedor");
         });
 });
+

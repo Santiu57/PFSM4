@@ -5,7 +5,7 @@ fetch("./php/get.php", {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
         table: "productos",
-        items: "nombre, descripcion, precio, imagen, nombreProveedor",
+        items: "nombre, descripcion, precio, imagen, nombreProveedor, telefono, correo, direccion",
         join: "proveedores",
         on: "productos.idProveedor = proveedores.idProveedor",
         order: "nombre",
@@ -32,7 +32,16 @@ fetch("./php/get.php", {
                     </div>
 
                     <p class="precio">$${producto.precio}</p>
-                    <p class="proveedor">${producto.nombreProveedor}</p>
+
+                    <div class="proveedor-wrapper">
+                        <p class="proveedor">${producto.nombreProveedor}</p>
+
+                        <div class="proveedor-info">
+                            <p class="telefono">${producto.telefono}</p>
+                            <p class="correo">${producto.correo}</p>
+                            <p class="direccion">${producto.direccion}</p>
+                        </div>
+                    </div>
                 </div>
             `;
         });
