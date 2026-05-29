@@ -1,34 +1,91 @@
+// ─── Imports y constantes globales ──────────────────────────────────────────
 import { ListaProveedores } from "../listaProveedores.js";
+import { filters } from "../filters.js"
 
 const section = document.getElementById("productos");
+
+// Agregar productos
+
+const agregar = document.createElement("section");
+agregar.className = "agregar";
+section.appendChild(agregar);
+
+// Filters Tab
+const filterdata = {
+    table: "productos",
+    items: {
+        idProducto: "number",
+        nombre: "text",
+        descripcion: "text",
+        precio: "number",
+        imagen: "text",
+        "productos.idProveedor": "idProveedor",
+        nombreProveedor: "text"
+    },
+}
+
+const filterTab = new filters(
+    filterdata,
+    where => {
+        productosContainer.innerHTML = "";
+        load(false, "idProducto", where);
+    }
+);
+
+section.appendChild(
+    filterTab.clone()
+);
+
+// Productos
+
+const productosContainer = document.createElement("div");
+productosContainer.id = "productos-container";
+
+section.appendChild(productosContainer);
+
+// ─── Inicializaciones ────────────────────────────────────────────────────────
 
 const lista = new ListaProveedores();
 await lista.load();
 
+await load();
+
 // ─── Cargar y renderizar productos ───────────────────────────────────────────
+async function load(desc = false, order = "idProducto", where = "") {
 
-fetch("./php/get.php", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-        table: "productos",
-        items: "idProducto, nombre, descripcion, precio, imagen, productos.idProveedor, nombreProveedor",
-        join: "proveedores",
-        on: "productos.idProveedor = proveedores.idProveedor",
-        order: "idProducto",
+    fetch("./php/get.php", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            table: "productos",
+            items: "idProducto, nombre, descripcion, precio, imagen, productos.idProveedor, nombreProveedor",
+            join: "proveedores",
+            on: "productos.idProveedor = proveedores.idProveedor",
+            order: order,
+            where: where,
+            desc: desc
+        })
     })
-})
-    .then(r => r.json())
-    .then(data => {
-        console.log(data);
-        data.forEach(producto => {
+        //Recojedor de errores
+        .then(async r => {
+            const text = await r.text();
 
-            const div = document.createElement("div");
-            div.className = "producto";
-            div.dataset.id = producto.idProducto;
-            div.dataset.proveedor = producto.idProveedor;
+            try {
+                return JSON.parse(text);
+            } catch {
+                console.error("Respuesta no JSON:", text);
+            }
+        })
+        .then(data => {
+            console.log(data);
+            data.forEach(producto => {
 
-            div.innerHTML = `
+                const div = document.createElement("div");
+                div.className = "producto";
+                div.dataset.id = producto.idProducto;
+                div.dataset.proveedor = producto.idProveedor;
+
+                div.innerHTML = `
                 <p class="id">#${producto.idProducto}</p>
 
                 <div class="imagen-container">
@@ -62,14 +119,15 @@ fetch("./php/get.php", {
                 </div>
             `;
 
-            section.appendChild(div);
+                productosContainer.appendChild(div);
 
-            // Clonar la lista de proveedores para este producto y preseleccionar
-            const select = lista.clone();
-            select.value = producto.idProveedor;
-            div.querySelector(".proveedor-container").appendChild(select);
+                // Clonar la lista de proveedores para este producto y preseleccionar
+                const select = lista.clone();
+                select.value = producto.idProveedor;
+                div.querySelector(".proveedor-container").appendChild(select);
+            });
         });
-    });
+}
 
 // ─── Delegación de clicks (update / delete) ──────────────────────────────────
 
@@ -139,10 +197,6 @@ function eliminarProducto(id) {
 }
 
 // ─── Sección "Agregar Producto" ───────────────────────────────────────────────
-
-const agregar = document.createElement("section");
-agregar.className = "agregar";
-section.appendChild(agregar);
 
 agregar.innerHTML = `
     <div class="productos-form">

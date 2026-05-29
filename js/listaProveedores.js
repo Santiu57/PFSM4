@@ -53,18 +53,10 @@ export class ListaProveedores {
 
     clone() {
 
-        const select =
-            document.createElement("select");
-
-        select.className =
-            "lista-proveedores";
-
-        select.name =
-            "idProveedor";
-
-        select.innerHTML =
-            this.options;
-
+        const select = document.createElement("select");
+        select.className = "lista-proveedores";
+        select.name = "idProveedor";
+        select.innerHTML = this.options;
         this.clones.push(select);
 
         return select;

@@ -21,20 +21,17 @@ if ($filters = json_decode(file_get_contents("php://input"), true)) {
         $mysql_query .= " ON " . $filters['on'];
     }
 
-    if (!empty($filters['where'])) {
+    if (!empty($filters['where']) && $filters['where'] !== "") {
         $mysql_query .= ' WHERE ' . $filters['where'];
     }
 
     if (!empty($filters['order'])) {
         $mysql_query .= ' ORDER BY ' . $filters['order'];
-    }
-
-    if (!empty($filters['desc'])) {
-        $mysql_query .= ' DESC';
-    }
-
-    if (!empty($filters['asc'])) {
-        $mysql_query .= ' ASC';
+        if (!empty($filters['desc'])) {
+            $mysql_query .= ' DESC';
+        } else {
+            $mysql_query .= ' ASC';
+        }
     }
 
     if ($resultado = mysqli_query($conn, $mysql_query)) {

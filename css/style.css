@@ -1328,3 +1328,139 @@ body {
 #catalogo .direccion::before {
     content: "📍 ";
 }
+
+/* ═══════════════════════════════════════════
+   FILTROS
+═══════════════════════════════════════════ */
+
+.filters-tab {
+    background: #ffffff;
+    border-radius: 18px;
+    padding: 22px;
+    margin-bottom: 28px;
+
+    box-shadow:
+        0 6px 18px rgba(0, 0, 0, .08),
+        0 2px 6px rgba(0, 0, 0, .04);
+
+    transition:
+        transform .25s ease,
+        box-shadow .25s ease;
+}
+
+.filters-tab:hover {
+    transform: translateY(-3px);
+
+    box-shadow:
+        0 12px 28px rgba(0, 0, 0, .12),
+        0 4px 10px rgba(0, 0, 0, .06);
+}
+
+/* Contenedor de filas */
+.filters-container {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-top: 18px;
+}
+
+/* Fila individual */
+.filter-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+/* Inputs + selects */
+.filter-row select,
+.filter-row input {
+    flex: 1;
+    min-width: 140px;
+
+    padding: 10px 14px;
+
+    border: 1px solid #d1d5db;
+    border-radius: 10px;
+
+    background: #f9fafb;
+    color: #111827;
+
+    font-size: .95rem;
+    outline: none;
+
+    transition:
+        border-color .2s,
+        box-shadow .2s,
+        background .2s;
+}
+
+.filter-row select:focus,
+.filter-row input:focus {
+    border-color: #2563eb;
+    background: white;
+    box-shadow:
+        0 0 0 4px rgba(37, 99, 235, .12);
+}
+
+/* Botón agregar */
+.filters-tab>button {
+    border: none;
+    border-radius: 12px;
+    padding: 11px 20px;
+
+    font-size: .95rem;
+    font-weight: 600;
+    cursor: pointer;
+
+    background:
+        linear-gradient(135deg, #16a34a, #15803d);
+    color: white;
+
+    box-shadow:
+        0 6px 14px rgba(22, 163, 74, .25);
+
+    transition:
+        transform .18s ease,
+        box-shadow .18s ease;
+}
+
+.filters-tab>button:hover {
+    transform: translateY(-2px);
+    box-shadow:
+        0 10px 20px rgba(22, 163, 74, .35);
+}
+
+/* Botón eliminar */
+.filter-row button {
+    border: none;
+    border-radius: 10px;
+
+    width: 42px;
+    height: 42px;
+
+    font-size: .95rem;
+    font-weight: 700;
+    cursor: pointer;
+
+    background:
+        linear-gradient(135deg, #dc2626, #b91c1c);
+    color: white;
+
+    box-shadow:
+        0 6px 14px rgba(220, 38, 38, .25);
+
+    transition:
+        transform .18s ease,
+        box-shadow .18s ease;
+}
+
+.filter-row button:hover {
+    transform: translateY(-2px);
+    box-shadow:
+        0 10px 20px rgba(220, 38, 38, .35);
+}
+
+.filter-row button:active {
+    transform: scale(.96);
+}
