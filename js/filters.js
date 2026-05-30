@@ -3,6 +3,7 @@ export class filters {
     constructor(config, onFilter) {
         // Configuración de filtros:
         // {
+        //     table: "tabla" -- Solo para el nombre en el header
         //     items: {
         //         nombre: "text",
         //         precio: "number"
@@ -10,8 +11,8 @@ export class filters {
         // }
         this.config = config;
 
-        // Callback que recibe el WHERE final
-        // Se debe limpiar datos
+        // funcion que carga los items con el where final
+        // El contenedor debe ser limpiado antes
         this.onFilter = onFilter;
 
         // Reservado para posibles filtros persistentes
@@ -20,21 +21,70 @@ export class filters {
 
     clone() {
 
-        // Contenedor principal del sistema de filtros
+        // Contenedor principal
         const tab = document.createElement("div");
         tab.className = "filters-tab";
+
+        // Label titular
+        const label = document.createElement("h2");
+        label.innerHTML = `Filtros para ${this.config.table}`
+
+        // ─── Order By ───────────────────────────────
+        const orderRow = document.createElement("div");
+        orderRow.className = "order-row";
+
+        // Select campo 
+        const orderCampo = document.createElement("select");
+        orderCampo.name = "orden";
+
+        Object.keys(this.config.items)
+            .forEach(key => {
+                orderCampo.innerHTML += `
+            <option value="${key}">
+                ${key}
+            </option>
+        `;
+            });
+
+        // Botón ASC / DESC
+        const orderBtn = document.createElement("button");
+        orderBtn.textContent = "▼";
+
+        let desc = false;
+
+        orderBtn.onclick = () => {
+            desc = !desc;
+            orderBtn.textContent =
+                desc ? "▲" : "▼";
+
+            this.apply(container, orderCampo.value, desc);
+        };
+
+        // Cambiar campo ORDER
+        orderCampo.onchange = () =>
+            this.apply(
+                container,
+                orderCampo.value,
+                desc
+            );
+
+        orderRow.append(
+            orderCampo,
+            orderBtn
+        );
 
         // Botón para agregar nuevas filas de filtro
         const addBtn = document.createElement("button");
         addBtn.textContent = "+ Filtro";
 
-        // Aquí se almacenan todas las filas creadas
+        // Contenedor de las filas de filtros
         const container = document.createElement("div");
         container.className = "filters-container";
 
+        // Crear una fila nueva
         addBtn.onclick = () => {
 
-            // Cada filtro individual vive dentro de una fila
+            // Contenedor de la fila
             const row = document.createElement("div");
             row.className = "filter-row";
 
@@ -93,10 +143,10 @@ export class filters {
 
                     operador.innerHTML = `
                         <option value="LIKE">
-                            contiene
+                            Contiene
                         </option>
                         <option value="=">
-                            idéntico
+                            Identico a
                         </option>
                     `;
                 }
@@ -120,7 +170,11 @@ export class filters {
                 row.remove();
 
                 // Recalcula el WHERE restante
-                this.apply(container);
+                this.apply(
+                    container,
+                    orderCampo.value,
+                    desc
+                );
             };
 
             // ─── Eventos reactivos ───────────────────
@@ -129,11 +183,14 @@ export class filters {
             // - operador
             // - valor
             // vuelve a generar el WHERE automáticamente.
-            [campo, operador, valor]
-                .forEach(el =>
-                    el.oninput = () =>
-                        this.apply(container)
-                );
+            [campo, operador, valor].forEach(
+                change => change.oninput =
+                    () => this.apply(
+                        container,
+                        orderCampo.value,
+                        desc
+                    )
+            );
 
             // Construcción de la fila
             row.append(
@@ -149,6 +206,8 @@ export class filters {
 
         // Estructura final del componente
         tab.append(
+            label,
+            orderRow,
             addBtn,
             container
         );
@@ -156,7 +215,11 @@ export class filters {
         return tab;
     }
 
-    apply(container) {
+    apply(
+        container,
+        order = Object.keys(this.config.items)[0],
+        desc = false
+    ) {
 
         // Obtiene todas las filas activas del DOM
         const rows =
@@ -218,10 +281,13 @@ export class filters {
 
         // Une todas las condiciones usando AND:
         // precio > 10 AND nombre LIKE '%mesa%'
-        const finalWhere =
-            where.join(" AND ");
+        const finalWhere = where.join(" AND ");
 
         // Entrega el resultado al callback externo
-        this.onFilter(finalWhere);
+        this.onFilter(
+            finalWhere,
+            order,
+            desc
+        );
     }
 }

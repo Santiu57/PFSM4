@@ -34,7 +34,7 @@ require_once("php/conexion.php");
 
     </footer>
 
-    <script src="js/catalogo.js"></script>
+    <script src="js/catalogo.js" type="module"></script>
 </body>
 
 </html>

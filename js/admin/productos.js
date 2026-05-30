@@ -4,13 +4,13 @@ import { filters } from "../filters.js"
 
 const section = document.getElementById("productos");
 
-// Agregar productos
+// ─── Seccion Agregar productos ───────────────────────────────────────────────
 
 const agregar = document.createElement("section");
 agregar.className = "agregar";
 section.appendChild(agregar);
 
-// Filters Tab
+// ─── Filters Tab ────────────────────────────────────────────────────────────
 const filterdata = {
     table: "productos",
     items: {
@@ -19,16 +19,15 @@ const filterdata = {
         descripcion: "text",
         precio: "number",
         imagen: "text",
-        "productos.idProveedor": "idProveedor",
         nombreProveedor: "text"
     },
 }
 
 const filterTab = new filters(
     filterdata,
-    where => {
+    (where, order, desc) => {
         productosContainer.innerHTML = "";
-        load(false, "idProducto", where);
+        load(desc, order, where);
     }
 );
 
@@ -36,7 +35,7 @@ section.appendChild(
     filterTab.clone()
 );
 
-// Productos
+// ─── Contenedor de los Productos ─────────────────────────────────────────────
 
 const productosContainer = document.createElement("div");
 productosContainer.id = "productos-container";
@@ -278,7 +277,7 @@ agregar.querySelector(".btn-agregar").addEventListener("click", () => {
         .then(r => r.text())
         .then(response => {
             alert(response);
-            location.reload();
+            load(); // Actualizar sin recargar
         })
         .catch(error => {
             console.error(error);

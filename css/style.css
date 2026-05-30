@@ -1136,7 +1136,7 @@ body {
     min-height: 72px;
     overflow: hidden;
 
-    transition: max-height .35s ease;
+    transition: max-height .15s ease;
 }
 
 /* texto colapsado */
@@ -1148,7 +1148,7 @@ body {
     overflow: hidden;
 
     transition:
-        max-height .35s ease;
+        max-height .15s ease;
 }
 
 /* expandido */
@@ -1230,11 +1230,6 @@ body {
     color: #fff;
     box-shadow:
         0 8px 18px rgba(37, 99, 235, .25);
-}
-
-/* Rotación */
-#catalogo .descripcion-container.expandida .expandir-desc {
-    transform: rotate(180deg);
 }
 
 /* ═══════════════════════════════════════════
@@ -1364,6 +1359,15 @@ body {
     margin-top: 18px;
 }
 
+/* Header */
+
+.filters-tab h2 {
+    display: flex;
+    left: 16px;
+    top: 8px;
+    margin: 0 0 10px 0;
+}
+
 /* Fila individual */
 .filter-row {
     display: flex;
@@ -1462,5 +1466,93 @@ body {
 }
 
 .filter-row button:active {
+    transform: scale(.96);
+}
+
+/* ═══════════════════════════════════════════
+   ORDER BY
+═══════════════════════════════════════════ */
+
+.order-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    margin-bottom: 18px;
+    padding-bottom: 18px;
+
+    border-bottom:
+        1px solid rgba(0, 0, 0, .06);
+}
+
+/* Select ORDER */
+.order-row select {
+    flex: 1;
+    max-width: 260px;
+
+    padding: 10px 14px;
+
+    border: 1px solid #d1d5db;
+    border-radius: 10px;
+
+    background: #f9fafb;
+    color: #111827;
+
+    font-size: .95rem;
+    outline: none;
+
+    transition:
+        border-color .2s,
+        box-shadow .2s,
+        background .2s;
+}
+
+.order-row select:focus {
+    border-color: #2563eb;
+    background: white;
+
+    box-shadow:
+        0 0 0 4px rgba(37, 99, 235, .12);
+}
+
+/* Botón ASC / DESC */
+.order-row button {
+    min-width: 44px;
+    height: 42px;
+
+    border: none;
+    border-radius: 10px;
+
+    padding: 0 3px;
+
+    font-size: .9rem;
+    font-weight: 700;
+    letter-spacing: .4px;
+
+    cursor: pointer;
+
+    background:
+        linear-gradient(135deg,
+            #2563eb,
+            #1d4ed8);
+
+    color: white;
+
+    box-shadow:
+        0 6px 14px rgba(37, 99, 235, .25);
+
+    transition:
+        transform .18s ease,
+        box-shadow .18s ease;
+}
+
+.order-row button:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 10px 20px rgba(37, 99, 235, .35);
+}
+
+.order-row button:active {
     transform: scale(.96);
 }

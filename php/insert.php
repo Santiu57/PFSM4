@@ -21,7 +21,7 @@ switch ($_POST["table"]) {
             die("Imagen no recibida");
         }
 
-        $imagen = copyImage($_FILES["imagen"], $nombre);
+        $imagen = copyImage($_FILES["imagen"], $nombre, $conn);
 
         if (!$imagen) {
             die("Error al guardar imagen");
@@ -67,14 +67,27 @@ if (mysqli_query($conn, $sql)) {
 
 mysqli_close($conn);
 
-function copyImage($archivo, $nombre)
+function copyImage($archivo, $nombre, $conn)
 {
     $carpeta = "C:/xampp/htdocs/PFSM4/img/productos/";
 
     if ($archivo["error"] === 0) {
 
+        // Obtener último ID
+        $query = "SELECT MAX(idProducto) AS ultimo FROM productos";
+        $result = mysqli_query($conn, $query);
+        $row = mysqli_fetch_assoc($result);
+
+        // Sumar 1 al último ID
+        $nuevoId = ($row["ultimo"]) + 1;
+
+        // Obtener extensión
         $extension = pathinfo($archivo["name"], PATHINFO_EXTENSION);
-        $nuevoNombre = preg_replace("/[^a-zA-Z0-9_-]/", "_", $nombre) . "." . $extension;
+
+        // Limpiar nombre y agregar prefijo ID
+        $nombreLimpio = preg_replace("/[^a-zA-Z0-9_-]/", "_", $nombre);
+        $nuevoNombre = $nuevoId . "_" . $nombreLimpio . "." . $extension;
+
         $rutaFinal = $carpeta . $nuevoNombre;
 
         if (move_uploaded_file($archivo["tmp_name"], $rutaFinal)) {
