@@ -30,9 +30,9 @@ section.parentNode.insertBefore(
 loadCatalogo();
 
 // ─── Cargar catálogo ────────────────────────────────────────────────────────
-function loadCatalogo(desc = false, order = "nombre", where = "") {
+async function loadCatalogo(desc = false, order = "nombre", where = "") {
 
-    fetch("./php/get.php", {
+    const response = await fetch("./php/get.php", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -44,14 +44,14 @@ function loadCatalogo(desc = false, order = "nombre", where = "") {
             where,
             desc
         })
-    })
-        .then(r => r.json())
-        .then(data => {
+    });
 
-            let html = "";
+    const data = await response.json();
 
-            data.forEach(producto => {
-                html += `
+    let html = "";
+
+    data.forEach(producto => {
+        html += `
                     <div class="producto">
                         <img src="${producto.imagen}"
                             alt="${producto.nombre}"
@@ -77,17 +77,16 @@ function loadCatalogo(desc = false, order = "nombre", where = "") {
                         </div>
                     </div>
                 `;
-            });
+    });
 
-            section.innerHTML = html;
+    section.innerHTML = html;
 
-            // Esperar render para calcular alturas reales
-            requestAnimationFrame(() => {
-                requestAnimationFrame(() => {
-                    iniciarDescripciones();
-                });
-            });
+    // Esperar render para calcular alturas reales
+    requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+            iniciarDescripciones();
         });
+    });
 }
 
 function iniciarDescripciones() {

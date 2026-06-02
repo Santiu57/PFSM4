@@ -2,6 +2,12 @@ import { filters } from "../filters.js";
 
 const section = document.getElementById("proveedores");
 
+// ─── Sección "Agregar Proveedor" ────────────────────────────────────────────
+const agregar = document.createElement("section");
+agregar.className = "agregar";
+agregar.id = "agregar-proveedor";
+section.appendChild(agregar);
+
 // ─── Filters Tab ────────────────────────────────────────────────────────────
 const filterdata = {
     table: "proveedores",
@@ -17,7 +23,6 @@ const filterdata = {
 const filterTab = new filters(
     filterdata,
     (where, order, desc) => {
-        proveedoresContainer.innerHTML = "";
         load(desc, order, where);
     }
 );
@@ -31,21 +36,15 @@ const proveedoresContainer = document.createElement("div");
 proveedoresContainer.id = "proveedores-container";
 section.appendChild(proveedoresContainer);
 
-// ─── Sección "Agregar Proveedor" ────────────────────────────────────────────
-const agregar = document.createElement("section");
-agregar.className = "agregar";
-agregar.id = "agregar-proveedor";
-section.appendChild(agregar);
-
 // ─── Inicializar ────────────────────────────────────────────────────────────
 load();
 
 // ─── Cargar y renderizar Proveedores ────────────────────────────────────────
-function load(desc = false, order = "idProveedor", where = "") {
+async function load(desc = false, order = "idProveedor", where = "") {
 
     proveedoresContainer.innerHTML = "";
 
-    fetch("./php/get.php", {
+    const response = await fetch("./php/get.php", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -55,27 +54,27 @@ function load(desc = false, order = "idProveedor", where = "") {
             where,
             desc
         })
-    })
-        .then(async r => {
-            const text = await r.text();
+    });
 
-            try {
-                return JSON.parse(text);
-            } catch {
-                console.error("Respuesta no JSON:", text);
-            }
-        })
-        .then(data => {
+    const text = await response.text();
 
-            if (!data) return;
+    let data;
+    try {
+        data = JSON.parse(text);
+    } catch {
+        console.error("Respuesta no JSON:", text);
+        return;
+    }
 
-            data.forEach(proveedor => {
+    if (!data) return;
+    proveedoresContainer.innerHTML = "";
+    data.forEach(proveedor => {
 
-                const div = document.createElement("div");
-                div.className = "proveedor";
-                div.dataset.id = proveedor.idProveedor;
+        const div = document.createElement("div");
+        div.className = "proveedor";
+        div.dataset.id = proveedor.idProveedor;
 
-                div.innerHTML = `
+        div.innerHTML = `
                     <p class="id">#${proveedor.idProveedor}</p>
 
                     <div class="campo">
@@ -120,9 +119,8 @@ function load(desc = false, order = "idProveedor", where = "") {
                     </div>
                 `;
 
-                proveedoresContainer.appendChild(div);
-            });
-        });
+        proveedoresContainer.appendChild(div);
+    });
 }
 
 // ─── Delegación de clicks (update / delete) ────────────────────────────────
@@ -141,7 +139,7 @@ section.addEventListener("click", e => {
 });
 
 // ─── Actualizar proveedor ───────────────────────────────────────────────────
-function actualizarProveedor(id) {
+async function actualizarProveedor(id) {
 
     const card = document.querySelector(
         `.proveedor[data-id="${id}"]`
@@ -168,27 +166,25 @@ function actualizarProveedor(id) {
     );
     formData.append("table", "proveedores");
 
-    fetch("./php/update.php", {
+    const response = await fetch("./php/update.php", {
         method: "POST",
         body: formData
-    })
-        .then(r => r.text())
-        .then(response => {
-            alert(response);
-            dispatchEvent(
-                new Event("updateProveedores")
-            );
-        });
+    });
+    const text = await response.text();
+    alert(text);
+    dispatchEvent(
+        new Event("updateProveedores")
+    );
 }
 
 // ─── Eliminar proveedor ─────────────────────────────────────────────────────
-function eliminarProveedor(id) {
+async function eliminarProveedor(id) {
 
     if (!confirm(
         "¿Eliminar proveedor?\nTodos los productos asociados también serán eliminados."
     )) return;
 
-    fetch("./php/delete.php", {
+    const response = await fetch("./php/delete.php", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
@@ -197,24 +193,22 @@ function eliminarProveedor(id) {
             where: `idProveedor = ${id}`,
             table: "proveedores"
         })
-    })
-        .then(r => r.text())
-        .then(response => {
+    });
+    const text = await response.text();
 
-            alert(response);
+    alert(text);
 
-            eliminarProductosAsociados(id);
+    eliminarProductosAsociados(id);
 
-            document
-                .querySelector(
-                    `.proveedor[data-id="${id}"]`
-                )
-                ?.remove();
+    document
+        .querySelector(
+            `.proveedor[data-id="${id}"]`
+        )
+        ?.remove();
 
-            dispatchEvent(
-                new Event("updateProveedores")
-            );
-        });
+    dispatchEvent(
+        new Event("updateProveedores")
+    );
 }
 
 // ─── Eliminar productos asociados ───────────────────────────────────────────
@@ -232,9 +226,9 @@ function eliminarProductosAsociados(idProveedor) {
 }
 
 // ─── Eliminar producto ──────────────────────────────────────────────────────
-function eliminarProducto(id) {
+async function eliminarProducto(id) {
 
-    fetch("./php/delete.php", {
+    const response = await fetch("./php/delete.php", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
@@ -243,18 +237,16 @@ function eliminarProducto(id) {
             where: `idProducto = ${id}`,
             table: "productos"
         })
-    })
-        .then(r => r.text())
-        .then(response => {
+    });
+    const text = await response.text();
 
-            console.log(response);
+    console.log(text);
 
-            document
-                .querySelector(
-                    `.producto[data-id="${id}"]`
-                )
-                ?.remove();
-        });
+    document
+        .querySelector(
+            `.producto[data-id="${id}"]`
+        )
+        ?.remove();
 }
 
 // ─── Form Agregar Proveedor ─────────────────────────────────────────────────
@@ -309,7 +301,7 @@ agregar.innerHTML = `
 // ─── Enviar nuevo proveedor ─────────────────────────────────────────────────
 agregar
     .querySelector(".btn-agregar")
-    .addEventListener("click", () => {
+    .addEventListener("click", async () => {
 
         const nombre = agregar
             .querySelector(".nombre-nuevo")
@@ -384,25 +376,35 @@ agregar
             "proveedores"
         );
 
-        fetch("./php/insert.php", {
-            method: "POST",
-            body: formData
-        })
-            .then(r => r.text())
-            .then(response => {
-
-                alert(response);
-
-                load(); // Actualizar sin reload
-                dispatchEvent(
-                    new Event("updateProveedores")
-                );
-            })
-            .catch(error => {
-
-                console.error(error);
-                alert(
-                    "Error al agregar proveedor"
-                );
+        try {
+            const response = await fetch("./php/insert.php", {
+                method: "POST",
+                body: formData
             });
+            const text = await response.text();
+
+            alert(text);
+
+            proveedoresContainer.innerHTML = "";
+            load(); // Actualizar sin reload
+            limpiarCampos();
+            dispatchEvent(
+                new Event("updateProveedores")
+            );
+        } catch (error) {
+
+            console.error(error);
+            alert(
+                "Error al agregar proveedor"
+            );
+        }
     });
+
+// ─── Limpiar campos ──────────────────────────────────────────
+
+function limpiarCampos() {
+    agregar.querySelector(".nombre-nuevo").value = "";
+    agregar.querySelector(".telefono-nuevo").value = "";
+    agregar.querySelector(".correo-nuevo").value = "";
+    agregar.querySelector(".direccion-nueva").value = "";
+}

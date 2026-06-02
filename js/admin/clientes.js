@@ -2,6 +2,12 @@ import { filters } from "../filters.js";
 
 const section = document.getElementById("clientes");
 
+// ─── Sección "Agregar Cliente" ──────────────────────────────────────────────
+const agregar = document.createElement("section");
+agregar.className = "agregar";
+agregar.id = "agregar-cliente";
+section.appendChild(agregar);
+
 // ─── Filters Tab ────────────────────────────────────────────────────────────
 const filterdata = {
     table: "clientes",
@@ -30,21 +36,15 @@ const clientesContainer = document.createElement("div");
 clientesContainer.id = "clientes-container";
 section.appendChild(clientesContainer);
 
-// ─── Sección "Agregar Cliente" ──────────────────────────────────────────────
-const agregar = document.createElement("section");
-agregar.className = "agregar";
-agregar.id = "agregar-cliente";
-section.appendChild(agregar);
-
 // ─── Inicializar ────────────────────────────────────────────────────────────
 load();
 
 // ─── Cargar y renderizar Clientes ───────────────────────────────────────────
-function load(desc = false, order = "idCliente", where = "") {
+async function load(desc = false, order = "idCliente", where = "") {
 
     clientesContainer.innerHTML = "";
 
-    fetch("./php/get.php", {
+    const response = await fetch("./php/get.php", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -54,62 +54,51 @@ function load(desc = false, order = "idCliente", where = "") {
             where,
             desc
         })
-    })
-        .then(async r => {
-            const text = await r.text();
+    });
 
-            try {
-                return JSON.parse(text);
-            } catch {
-                console.error("Respuesta no JSON:", text);
-            }
-        })
-        .then(data => {
+    const text = await response.text();
 
-            if (!data) return;
+    let data;
+    try {
+        data = JSON.parse(text);
+    } catch {
+        console.error("Respuesta no JSON:", text);
+        return;
+    }
 
-            data.forEach(cliente => {
+    if (!data) return;
 
-                const div = document.createElement("div");
-                div.className = "cliente";
-                div.dataset.id = cliente.idCliente;
+    data.forEach(cliente => {
+        const div = document.createElement("div");
+        div.className = "cliente";
+        div.dataset.id = cliente.idCliente;
 
-                div.innerHTML = `
-                    <p class="id">#${cliente.idCliente}</p>
+        div.innerHTML = `
+                <p class="id">#${cliente.idCliente}</p>
 
-                    <div class="campo">
-                        <p class="label">Nombre</p>
-                        <input type="text"
-                            name="nombre"
-                            class="nombre-Upd"
-                            value="${cliente.nombre}">
-                    </div>
+                <div class="campo">
+                    <p class="label">Nombre</p>
+                    <input type="text" name="nombre" class="nombre-Upd" value="${cliente.nombre}">
+                </div>
 
-                    <div class="campo">
-                        <p class="label">Teléfono</p>
-                        <input type="text"
-                            name="telefono"
-                            class="telefono-Upd"
-                            value="${cliente.telefono}">
-                    </div>
+                <div class="campo">
+                    <p class="label">Teléfono</p>
+                    <input type="text" name="telefono" class="telefono-Upd" value="${cliente.telefono}">
+                </div>
 
-                    <div class="campo">
-                        <p class="label">Correo</p>
-                        <input type="email"
-                            name="correo"
-                            class="correo-Upd"
-                            value="${cliente.correo}">
-                    </div>
+                <div class="campo">
+                    <p class="label">Correo</p>
+                    <input type="email" name="correo" class="correo-Upd" value="${cliente.correo}">
+                </div>
 
-                    <div class="campo">
-                        <button class="update">Actualizar</button>
-                        <button class="delete">Eliminar</button>
-                    </div>
-                `;
+                <div class="campo">
+                    <button class="update">Actualizar</button>
+                    <button class="delete">Eliminar</button>
+                </div>
+            `;
 
-                clientesContainer.appendChild(div);
-            });
-        });
+        clientesContainer.appendChild(div);
+    });
 }
 
 // ─── Delegación de clicks (update / delete) ─────────────────────────────────
@@ -128,7 +117,7 @@ section.addEventListener("click", e => {
 });
 
 // ─── Actualizar cliente ─────────────────────────────────────────────────────
-function actualizarCliente(id) {
+async function actualizarCliente(id) {
 
     const card = document.querySelector(
         `.cliente[data-id="${id}"]`
@@ -151,25 +140,22 @@ function actualizarCliente(id) {
     );
     formData.append("table", "clientes");
 
-    fetch("./php/update.php", {
+    const response = await fetch("./php/update.php", {
         method: "POST",
         body: formData
-    })
-        .then(r => r.text())
-        .then(response => {
-            alert(response);
-            dispatchEvent(new Event("updateClientes"));
-        });
+    });
+    const text = await response.text();
+    alert(text);
 }
 
 // ─── Eliminar cliente ───────────────────────────────────────────────────────
-function eliminarCliente(id) {
+async function eliminarCliente(id) {
 
     if (!confirm(
         "¿Eliminar cliente?\nTodos los productos asociados también serán eliminados."
     )) return;
 
-    fetch("./php/delete.php", {
+    const response = await fetch("./php/delete.php", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
@@ -178,18 +164,16 @@ function eliminarCliente(id) {
             where: `idCliente = ${id}`,
             table: "clientes"
         })
-    })
-        .then(r => r.text())
-        .then(response => {
+    });
 
-            alert(response);
+    const text = await response.text();
+    alert(text);
 
-            document
-                .querySelector(
-                    `.cliente[data-id="${id}"]`
-                )
-                ?.remove();
-        });
+    document
+        .querySelector(
+            `.cliente[data-id="${id}"]`
+        )
+        ?.remove();
 }
 
 // ─── Form Agregar Cliente ───────────────────────────────────────────────────
@@ -199,32 +183,21 @@ agregar.innerHTML = `
 
         <div class="campo">
             <p class="label">Nombre</p>
-            <input type="text"
-                class="nombre-nuevo"
-                name="nombre"
-                placeholder="Nombre del cliente">
+            <input type="text" class="nombre-nuevo" name="nombreCliente" placeholder="Nombre del cliente">
         </div>
 
         <div class="campo">
             <p class="label">Teléfono</p>
-            <input type="text"
-                class="telefono-nuevo"
-                name="telefono"
-                placeholder="Teléfono del cliente">
+            <input type="text" class="telefono-nuevo" name="telefono" placeholder="Teléfono del cliente">
         </div>
 
         <div class="campo">
             <p class="label">Correo</p>
-            <input type="email"
-                class="correo-nuevo"
-                name="correo"
-                placeholder="Correo del cliente">
+            <input type="email" class="correo-nuevo" name="correo" placeholder="Correo del cliente">
         </div>
 
         <div class="campo">
-            <button class="btn-agregar">
-                Agregar
-            </button>
+            <button class="btn-agregar">Agregar</button>
         </div>
     </div>
 `;
@@ -232,7 +205,7 @@ agregar.innerHTML = `
 // ─── Enviar nuevo cliente ───────────────────────────────────────────────────
 agregar
     .querySelector(".btn-agregar")
-    .addEventListener("click", () => {
+    .addEventListener("click", async () => {
 
         const nombre = agregar
             .querySelector(".nombre-nuevo")
@@ -274,23 +247,25 @@ agregar
         formData.append("correo", correo);
         formData.append("table", "clientes");
 
-        fetch("./php/insert.php", {
-            method: "POST",
-            body: formData
-        })
-            .then(r => r.text())
-            .then(response => {
-
-                alert(response);
-
-                load(); // recargar sin reload
-                dispatchEvent(
-                    new Event("updateClientes")
-                );
-            })
-            .catch(error => {
-
-                console.error(error);
-                alert("Error al agregar cliente");
+        try {
+            const response = await fetch("./php/insert.php", {
+                method: "POST",
+                body: formData
             });
+            const text = await response.text();
+            alert(text);
+            limpiarCampos();
+            load(); // recargar sin reload
+        } catch (error) {
+            console.error(error);
+            alert("Error al agregar cliente");
+        }
     });
+
+// ─── Limpiar campos ──────────────────────────────────────────
+
+function limpiarCampos() {
+    agregar.querySelector(".nombre-nuevo").value = "";
+    agregar.querySelector(".telefono-nuevo").value = "";
+    agregar.querySelector(".correo-nuevo").value = "";
+}

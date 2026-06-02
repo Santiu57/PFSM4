@@ -9,7 +9,7 @@
 
 <body>
     <header>
-        <h1>Cafeteria</h1>
+        <h1>Home</h1>
     </header>
     <nav>
         <a href="index.php">Home</a>

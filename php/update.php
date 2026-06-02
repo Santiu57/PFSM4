@@ -137,8 +137,6 @@ if ($_POST) {
     echo "No se recibieron datos";
 }
 
-mysqli_close($conn);
-
 function copyImage(
     $archivo,
     $nombre

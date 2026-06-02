@@ -26,7 +26,6 @@ const filterdata = {
 const filterTab = new filters(
     filterdata,
     (where, order, desc) => {
-        productosContainer.innerHTML = "";
         load(desc, order, where);
     }
 );
@@ -52,7 +51,7 @@ await load();
 // ─── Cargar y renderizar productos ───────────────────────────────────────────
 async function load(desc = false, order = "idProducto", where = "") {
 
-    fetch("./php/get.php", {
+    const response = await fetch("./php/get.php", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -64,27 +63,27 @@ async function load(desc = false, order = "idProducto", where = "") {
             where: where,
             desc: desc
         })
-    })
-        //Recojedor de errores
-        .then(async r => {
-            const text = await r.text();
+    });
 
-            try {
-                return JSON.parse(text);
-            } catch {
-                console.error("Respuesta no JSON:", text);
-            }
-        })
-        .then(data => {
-            console.log(data);
-            data.forEach(producto => {
+    const text = await response.text();
 
-                const div = document.createElement("div");
-                div.className = "producto";
-                div.dataset.id = producto.idProducto;
-                div.dataset.proveedor = producto.idProveedor;
+    let data;
+    try {
+        data = JSON.parse(text);
+    } catch {
+        console.error("Respuesta no JSON:", text);
+        return;
+    }
+    productosContainer.innerHTML = "";
+    console.log("Productos cargados:", data);
+    data.forEach(producto => {
 
-                div.innerHTML = `
+        const div = document.createElement("div");
+        div.className = "producto";
+        div.dataset.id = producto.idProducto;
+        div.dataset.proveedor = producto.idProveedor;
+
+        div.innerHTML = `
                 <p class="id">#${producto.idProducto}</p>
 
                 <div class="imagen-container">
@@ -118,14 +117,13 @@ async function load(desc = false, order = "idProducto", where = "") {
                 </div>
             `;
 
-                productosContainer.appendChild(div);
+        productosContainer.appendChild(div);
 
-                // Clonar la lista de proveedores para este producto y preseleccionar
-                const select = lista.clone();
-                select.value = producto.idProveedor;
-                div.querySelector(".proveedor-container").appendChild(select);
-            });
-        });
+        // Clonar la lista de proveedores para este producto y preseleccionar
+        const select = lista.clone();
+        select.value = producto.idProveedor;
+        div.querySelector(".proveedor-container").appendChild(select);
+    });
 }
 
 // ─── Delegación de clicks (update / delete) ──────────────────────────────────
@@ -154,7 +152,7 @@ section.addEventListener("change", e => {
 
 // ─── Actualizar producto ──────────────────────────────────────────────────────
 
-function actualizarProducto(id) {
+async function actualizarProducto(id) {
     const card = document.querySelector(`.producto[data-id="${id}"]`);
 
     const imagen = card.querySelector(".imagen-input").files[0];
@@ -169,17 +167,17 @@ function actualizarProducto(id) {
 
     if (imagen) formData.append("imagen", imagen);
 
-    fetch("./php/update.php", { method: "POST", body: formData })
-        .then(r => r.text())
-        .then(response => alert(response));
+    const response = await fetch("./php/update.php", { method: "POST", body: formData });
+    const text = await response.text();
+    alert(text);
 }
 
 // ─── Eliminar producto ────────────────────────────────────────────────────────
 
-function eliminarProducto(id) {
+async function eliminarProducto(id) {
     if (!confirm("¿Eliminar producto?")) return;
 
-    fetch("./php/delete.php", {
+    const response = await fetch("./php/delete.php", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -187,12 +185,10 @@ function eliminarProducto(id) {
             where: `idProducto = ${id}`,
             table: "productos"
         })
-    })
-        .then(r => r.text())
-        .then(response => {
-            alert(response);
-            document.querySelector(`.producto[data-id="${id}"]`).remove();
-        });
+    });
+    const text = await response.text();
+    alert(text);
+    document.querySelector(`.producto[data-id="${id}"]`).remove();
 }
 
 // ─── Sección "Agregar Producto" ───────────────────────────────────────────────
@@ -247,7 +243,7 @@ agregar.querySelector(".imagen-input-agregar").addEventListener("change", e => {
 });
 
 // Enviar nuevo producto
-agregar.querySelector(".btn-agregar").addEventListener("click", () => {
+agregar.querySelector(".btn-agregar").addEventListener("click", async () => {
     const nombre = agregar.querySelector(".nombre-nuevo").value.trim();
     const descripcion = agregar.querySelector(".descripcion-nueva").value.trim();
     const precio = agregar.querySelector(".precio-nuevo").value;
@@ -273,14 +269,25 @@ agregar.querySelector(".btn-agregar").addEventListener("click", () => {
     formData.append("imagen", imagen);
     formData.append("table", "productos");
 
-    fetch("./php/insert.php", { method: "POST", body: formData })
-        .then(r => r.text())
-        .then(response => {
-            alert(response);
-            load(); // Actualizar sin recargar
-        })
-        .catch(error => {
-            console.error(error);
-            alert("Error al agregar producto");
-        });
+    try {
+        const response = await fetch("./php/insert.php", { method: "POST", body: formData });
+        const text = await response.text();
+        alert(text);
+        load(); // Actualizar sin recargar
+        limpiarCampos();
+    } catch (error) {
+        console.error(error);
+        alert("Error al agregar producto");
+    }
 });
+
+// ─── Limpiar campos ──────────────────────────────────────────
+
+function limpiarCampos() {
+    agregar.querySelector(".nombre-nuevo").value = "";
+    agregar.querySelector(".descripcion-nueva").value = "";
+    agregar.querySelector(".precio-nuevo").value = "";
+    agregar.querySelector(".lista-proveedores").value = "";
+    agregar.querySelector(".imagen-input-agregar").value = "";
+    agregar.querySelector(".imagen-preview-agregar").style.display = "none";
+}
