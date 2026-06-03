@@ -6,10 +6,10 @@ const section = document.getElementById("catalogo");
 const filterdata = {
     table: "productos",
     items: {
-        nombre: "text",
-        descripcion: "text",
-        precio: "number",
-        nombreProveedor: "text"
+        nombre: { type: "text", label: "Nombre" },
+        descripcion: { type: "text", label: "Descripción" },
+        precio: { type: "number", label: "Precio" },
+        nombreProveedor: { type: "text", label: "Proveedor" }
     }
 };
 

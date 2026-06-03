@@ -12,11 +12,11 @@ section.appendChild(agregar);
 const filterdata = {
     table: "proveedores",
     items: {
-        idProveedor: "number",
-        nombreProveedor: "text",
-        telefono: "text",
-        correo: "text",
-        direccion: "text"
+        idProveedor: { type: "number", label: "ID de Proveedor" },
+        nombreProveedor: { type: "text", label: "Nombre" },
+        telefono: { type: "text", label: "Telefono" },
+        correo: { type: "text", label: "Correo" },
+        direccion: { type: "text", label: "Dirección" },
     }
 };
 

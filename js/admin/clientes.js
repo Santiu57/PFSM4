@@ -12,10 +12,10 @@ section.appendChild(agregar);
 const filterdata = {
     table: "clientes",
     items: {
-        idCliente: "number",
-        nombre: "text",
-        telefono: "text",
-        correo: "text"
+        idCliente: { type: "number", label: "ID de Cliente" },
+        nombre: { type: "text", label: "Nombre" },
+        telefono: { type: "text", label: "Telefono" },
+        correo: { type: "text", label: "Correo" },
     }
 };
 

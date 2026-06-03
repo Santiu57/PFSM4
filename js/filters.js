@@ -25,13 +25,17 @@ export class filters {
         const tab = document.createElement("div");
         tab.className = "filters-tab";
 
-        // Label titular
-        const label = document.createElement("h2");
-        label.innerHTML = `Filtros para ${this.config.table}`
+        // Label order
+        const labelOrder = document.createElement("h2");
+        labelOrder.innerHTML = `Ordenar ${this.config.table} por:`
 
         // ─── Order By ───────────────────────────────
         const orderRow = document.createElement("div");
         orderRow.className = "order-row";
+
+        // Label filters
+        const labelFIlters = document.createElement("h2");
+        labelFIlters.innerHTML = `Filtros para ${this.config.table}`
 
         // Select campo 
         const orderCampo = document.createElement("select");
@@ -39,11 +43,13 @@ export class filters {
 
         Object.keys(this.config.items)
             .forEach(key => {
+                const item = this.config.items[key];
+
                 orderCampo.innerHTML += `
-            <option value="${key}">
-                ${key}
-            </option>
-        `;
+                        <option value="${key}">
+                            ${item.label}
+                        </option>
+                    `;
             });
 
         // Botón ASC / DESC
@@ -95,9 +101,11 @@ export class filters {
             Object.keys(this.config.items)
                 .forEach(key => {
 
+                    const item = this.config.items[key];
+
                     campo.innerHTML += `
                         <option value="${key}">
-                            ${key}
+                            ${item.label}
                         </option>
                     `;
                 });
@@ -114,8 +122,7 @@ export class filters {
 
                 // Obtiene el tipo del campo seleccionado
                 // desde la configuración original.
-                const type =
-                    this.config.items[campo.value];
+                const type = this.config.items[campo.value].type;
 
                 // Reinicia opciones anteriores para evitar
                 // acumulación de operadores incompatibles.
@@ -206,8 +213,9 @@ export class filters {
 
         // Estructura final del componente
         tab.append(
-            label,
+            labelOrder,
             orderRow,
+            labelFIlters,
             addBtn,
             container
         );

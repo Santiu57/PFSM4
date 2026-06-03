@@ -2,8 +2,59 @@
    BASE
 ═══════════════════════════════════════════ */
 
+
+:root {
+    --body-bg: #f4f6f9;
+    --surface: #ffffff;
+    --surface-alt: #f9fafb;
+    --surface-muted: #f0f0f0;
+    --surface-border: #ececec;
+    --border: #d1d5db;
+    --border-muted: #e5e7eb;
+
+    --text: #111827;
+    --text-strong: #1f2937;
+    --text-muted: #6b7280;
+    --text-medium: #4b5563;
+    --text-light: #374151;
+    --text-placeholder: #9ca3af;
+
+    --white: #ffffff;
+    --black: #000000;
+
+    --primary: #2563eb;
+    --primary-dark: #1d4ed8;
+    --success: #16a34a;
+    --success-dark: #15803d;
+    --danger: #dc2626;
+    --danger-dark: #b91c1c;
+
+    --shadow-strong: rgba(0, 0, 0, .12);
+    --shadow-medium: rgba(0, 0, 0, .08);
+    --shadow-soft: rgba(0, 0, 0, .06);
+    --shadow-subtle: rgba(0, 0, 0, .04);
+    --shadow-faint: rgba(0, 0, 0, .10);
+    --shadow-primary: rgba(37, 99, 235, .25);
+    --shadow-primary-strong: rgba(37, 99, 235, .35);
+    --shadow-success: rgba(22, 163, 74, .25);
+    --shadow-success-strong: rgba(22, 163, 74, .35);
+    --shadow-danger: rgba(220, 38, 38, .25);
+    --shadow-danger-strong: rgba(220, 38, 38, .35);
+    --shadow-deep: rgba(0, 0, 0, .14);
+
+    --overlay-dark: rgba(0, 0, 0, .35);
+    --fade-white: rgba(255, 255, 255, .9);
+    --nav-bg: rgba(255, 255, 255, 0.693);
+    --white-transparent: rgba(255, 255, 255, 0);
+    --white-translucent: rgba(255, 255, 255, .6);
+    --primary-bg: rgba(37, 99, 235, .10);
+    --primary-ring: rgba(37, 99, 235, .12);
+    --focus-border: #c7d2fe;
+    --shadow-xsoft: var(--shadow-xsoft);
+}
+
 body {
-    background: #f4f6f9;
+    background: var(--body-bg);
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 30px;
@@ -14,7 +65,7 @@ body {
 ═══════════════════════════════════════════ */
 
 .producto {
-    background: #ffffff;
+    background: var(--surface);
     border-radius: 18px;
     padding: 20px 20px 20px 190px;
     /* deja espacio a la imagen */
@@ -24,8 +75,8 @@ body {
     min-height: 190px;
 
     box-shadow:
-        0 6px 18px rgba(0, 0, 0, .08),
-        0 2px 6px rgba(0, 0, 0, .04);
+        0 6px 18px var(--shadow-medium),
+        0 2px 6px var(--shadow-subtle);
 
     transition:
         transform .25s ease,
@@ -36,8 +87,8 @@ body {
     transform: translateY(-4px);
 
     box-shadow:
-        0 12px 28px rgba(0, 0, 0, .12),
-        0 4px 10px rgba(0, 0, 0, .06);
+        0 12px 28px var(--shadow-strong),
+        0 4px 10px var(--shadow-soft);
 }
 
 /* — Imagen — */
@@ -53,9 +104,9 @@ body {
     overflow: hidden;
     cursor: pointer;
 
-    border: 2px solid #ececec;
+    border: 2px solid var(--surface-border);
 
-    box-shadow: 0 4px 12px rgba(0, 0, 0, .10);
+    box-shadow: 0 4px 12px var(--shadow-faint);
 }
 
 .producto .imagen-input,
@@ -81,7 +132,7 @@ body {
     content: "";
     position: absolute;
     inset: 0;
-    background: rgba(0, 0, 0, .35);
+    background: var(--overlay-dark);
     opacity: 0;
     transition: opacity .25s ease;
     z-index: 2;
@@ -96,7 +147,7 @@ body {
     align-items: center;
     justify-content: center;
     font-size: 2rem;
-    color: white;
+    color: var(--white);
     opacity: 0;
     z-index: 3;
     transform: scale(.75);
@@ -126,15 +177,15 @@ body {
     margin: 0;
     padding: 4px 12px;
 
-    background: linear-gradient(135deg, #2563eb, #1d4ed8);
-    color: white;
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    color: var(--white);
 
     border-radius: 999px;
     font-size: 1rem;
     font-weight: 700;
     letter-spacing: .5px;
 
-    box-shadow: 0 4px 10px rgba(37, 99, 235, .25);
+    box-shadow: 0 4px 10px var(--shadow-primary);
 }
 
 /* — Campos — */
@@ -150,7 +201,7 @@ body {
     margin: 0;
     min-width: 110px;
     font-weight: 600;
-    color: #374151;
+    color: var(--text-light);
 }
 
 /* Inputs */
@@ -158,10 +209,10 @@ body {
 .producto .campo .lista-proveedores {
     flex: 1;
     padding: 10px 14px;
-    border: 1px solid #d1d5db;
+    border: 1px solid var(--border);
     border-radius: 10px;
-    background: #f9fafb;
-    color: #111827;
+    background: var(--surface-alt);
+    color: var(--text);
     font-size: .95rem;
     outline: none;
     transition: border-color .2s, box-shadow .2s, background .2s;
@@ -169,13 +220,13 @@ body {
 
 .producto .campo input:focus,
 .producto .campo .lista-proveedores:focus {
-    border-color: #2563eb;
-    background: white;
-    box-shadow: 0 0 0 4px rgba(37, 99, 235, .12);
+    border-color: var(--primary);
+    background: var(--white);
+    box-shadow: 0 0 0 4px var(--primary-ring);
 }
 
 .producto .campo input::placeholder {
-    color: #9ca3af;
+    color: var(--text-placeholder);
 }
 
 .producto .precio-Upd {
@@ -208,13 +259,13 @@ body {
 }
 
 .producto .update {
-    background: linear-gradient(135deg, #16a34a, #15803d);
-    color: white;
-    box-shadow: 0 6px 14px rgba(22, 163, 74, .25);
+    background: linear-gradient(135deg, var(--success), var(--success-dark));
+    color: var(--white);
+    box-shadow: 0 6px 14px var(--shadow-success);
 }
 
 .producto .update:hover {
-    box-shadow: 0 10px 20px rgba(22, 163, 74, .35);
+    box-shadow: 0 10px 20px var(--shadow-success-strong);
 }
 
 .producto .update::before {
@@ -222,13 +273,13 @@ body {
 }
 
 .producto .delete {
-    background: linear-gradient(135deg, #dc2626, #b91c1c);
-    color: white;
-    box-shadow: 0 6px 14px rgba(220, 38, 38, .25);
+    background: linear-gradient(135deg, var(--danger), var(--danger-dark));
+    color: var(--white);
+    box-shadow: 0 6px 14px var(--shadow-danger);
 }
 
 .producto .delete:hover {
-    box-shadow: 0 10px 20px rgba(220, 38, 38, .35);
+    box-shadow: 0 10px 20px var(--shadow-danger-strong);
 }
 
 .producto .delete::before {
@@ -241,7 +292,7 @@ body {
 ═══════════════════════════════════════════ */
 
 .agregar {
-    background: #ffffff;
+    background: var(--surface);
     border-radius: 18px;
     padding: 20px 20px 20px 190px;
     padding-left: 190px;
@@ -250,8 +301,8 @@ body {
     min-height: 190px;
 
     box-shadow:
-        0 6px 18px rgba(0, 0, 0, .08),
-        0 2px 6px rgba(0, 0, 0, .04);
+        0 6px 18px var(--shadow-medium),
+        0 2px 6px var(--shadow-subtle);
 
     transition:
         transform .25s ease,
@@ -262,8 +313,8 @@ body {
     transform: translateY(-4px);
 
     box-shadow:
-        0 12px 28px rgba(0, 0, 0, .12),
-        0 4px 10px rgba(0, 0, 0, .06);
+        0 12px 28px var(--shadow-strong),
+        0 4px 10px var(--shadow-soft);
 }
 
 /* Título como badge */
@@ -274,15 +325,15 @@ body {
     margin: 0;
     padding: 6px 14px;
 
-    background: linear-gradient(135deg, #2563eb, #1d4ed8);
-    color: white;
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    color: var(--white);
 
     border-radius: 999px;
     font-size: .95rem;
     font-weight: 700;
     letter-spacing: .3px;
 
-    box-shadow: 0 4px 10px rgba(37, 99, 235, .25);
+    box-shadow: 0 4px 10px var(--shadow-primary);
 }
 
 /* Formulario */
@@ -303,10 +354,10 @@ body {
     overflow: hidden;
     cursor: pointer;
 
-    border: 2px solid #ececec;
-    background: #f9fafb;
+    border: 2px solid var(--surface-border);
+    background: var(--surface-alt);
 
-    box-shadow: 0 4px 12px rgba(0, 0, 0, .10);
+    box-shadow: 0 4px 12px var(--shadow-faint);
 }
 
 .productos-form .imagen-input,
@@ -334,7 +385,7 @@ body {
     content: "";
     position: absolute;
     inset: 0;
-    background: rgba(0, 0, 0, .35);
+    background: var(--overlay-dark);
     opacity: 0;
     transition: opacity .25s ease;
     z-index: 2;
@@ -349,7 +400,7 @@ body {
     align-items: center;
     justify-content: center;
     font-size: 2rem;
-    color: white;
+    color: var(--white);
     opacity: 0;
     z-index: 3;
     transform: scale(.75);
@@ -384,7 +435,7 @@ body {
     margin: 0;
     min-width: 110px;
     font-weight: 600;
-    color: #374151;
+    color: var(--text-light);
 }
 
 /* Inputs */
@@ -392,10 +443,10 @@ body {
 .productos-form .campo .lista-proveedores {
     flex: 1;
     padding: 10px 14px;
-    border: 1px solid #d1d5db;
+    border: 1px solid var(--border);
     border-radius: 10px;
-    background: #f9fafb;
-    color: #111827;
+    background: var(--surface-alt);
+    color: var(--text);
     font-size: .95rem;
     outline: none;
     transition:
@@ -406,13 +457,13 @@ body {
 
 .productos-form .campo input:focus,
 .productos-form .campo .lista-proveedores:focus {
-    border-color: #2563eb;
-    background: white;
-    box-shadow: 0 0 0 4px rgba(37, 99, 235, .12);
+    border-color: var(--primary);
+    background: var(--white);
+    box-shadow: 0 0 0 4px var(--primary-ring);
 }
 
 .productos-form .campo input::placeholder {
-    color: #9ca3af;
+    color: var(--text-placeholder);
 }
 
 /* Botón agregar como update */
@@ -429,15 +480,15 @@ body {
     font-weight: 600;
     cursor: pointer;
 
-    background: linear-gradient(135deg, #16a34a, #15803d);
-    color: white;
+    background: linear-gradient(135deg, var(--success), var(--success-dark));
+    color: var(--white);
 
     transition:
         transform .18s ease,
         box-shadow .18s ease;
 
     box-shadow:
-        0 6px 14px rgba(22, 163, 74, .25);
+        0 6px 14px var(--shadow-success);
 }
 
 .productos-form .btn-agregar::before {
@@ -447,7 +498,7 @@ body {
 .productos-form .btn-agregar:hover {
     transform: translateY(-2px);
     box-shadow:
-        0 10px 20px rgba(22, 163, 74, .35);
+        0 10px 20px var(--shadow-success-strong);
 }
 
 .productos-form .btn-agregar:active {
@@ -459,15 +510,15 @@ body {
 ═══════════════════════════════════════════ */
 
 .proveedor {
-    background: #ffffff;
+    background: var(--surface);
     border-radius: 18px;
     padding: 20px;
     margin-bottom: 25px;
     position: relative;
 
     box-shadow:
-        0 6px 18px rgba(0, 0, 0, .08),
-        0 2px 6px rgba(0, 0, 0, .04);
+        0 6px 18px var(--shadow-medium),
+        0 2px 6px var(--shadow-subtle);
 
     transition:
         transform .25s ease,
@@ -478,8 +529,8 @@ body {
     transform: translateY(-4px);
 
     box-shadow:
-        0 12px 28px rgba(0, 0, 0, .12),
-        0 4px 10px rgba(0, 0, 0, .06);
+        0 12px 28px var(--shadow-strong),
+        0 4px 10px var(--shadow-soft);
 }
 
 /* — ID badge — */
@@ -488,15 +539,15 @@ body {
     margin: 0 0 14px;
     padding: 4px 12px;
 
-    background: linear-gradient(135deg, #2563eb, #1d4ed8);
-    color: white;
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    color: var(--white);
 
     border-radius: 999px;
     font-size: 1rem;
     font-weight: 700;
     letter-spacing: .5px;
 
-    box-shadow: 0 4px 10px rgba(37, 99, 235, .25);
+    box-shadow: 0 4px 10px var(--shadow-primary);
 }
 
 /* — Campos — */
@@ -511,29 +562,29 @@ body {
     margin: 0;
     min-width: 90px;
     font-weight: 600;
-    color: #374151;
+    color: var(--text-light);
 }
 
 .proveedor .campo input {
     flex: 1;
     padding: 10px 14px;
-    border: 1px solid #d1d5db;
+    border: 1px solid var(--border);
     border-radius: 10px;
-    background: #f9fafb;
-    color: #111827;
+    background: var(--surface-alt);
+    color: var(--text);
     font-size: .95rem;
     outline: none;
     transition: border-color .2s, box-shadow .2s, background .2s;
 }
 
 .proveedor .campo input:focus {
-    border-color: #2563eb;
-    background: white;
-    box-shadow: 0 0 0 4px rgba(37, 99, 235, .12);
+    border-color: var(--primary);
+    background: var(--white);
+    box-shadow: 0 0 0 4px var(--primary-ring);
 }
 
 .proveedor .campo input::placeholder {
-    color: #9ca3af;
+    color: var(--text-placeholder);
 }
 
 /* — Botones — */
@@ -561,13 +612,13 @@ body {
 }
 
 .proveedor .update {
-    background: linear-gradient(135deg, #16a34a, #15803d);
-    color: white;
-    box-shadow: 0 6px 14px rgba(22, 163, 74, .25);
+    background: linear-gradient(135deg, var(--success), var(--success-dark));
+    color: var(--white);
+    box-shadow: 0 6px 14px var(--shadow-success);
 }
 
 .proveedor .update:hover {
-    box-shadow: 0 10px 20px rgba(22, 163, 74, .35);
+    box-shadow: 0 10px 20px var(--shadow-success-strong);
 }
 
 .proveedor .update::before {
@@ -575,13 +626,13 @@ body {
 }
 
 .proveedor .delete {
-    background: linear-gradient(135deg, #dc2626, #b91c1c);
-    color: white;
-    box-shadow: 0 6px 14px rgba(220, 38, 38, .25);
+    background: linear-gradient(135deg, var(--danger), var(--danger-dark));
+    color: var(--white);
+    box-shadow: 0 6px 14px var(--shadow-danger);
 }
 
 .proveedor .delete:hover {
-    box-shadow: 0 10px 20px rgba(220, 38, 38, .35);
+    box-shadow: 0 10px 20px var(--shadow-danger-strong);
 }
 
 .proveedor .delete::before {
@@ -631,16 +682,16 @@ body {
     margin: 0;
     min-width: 90px;
     font-weight: 600;
-    color: #374151;
+    color: var(--text-light);
 }
 
 .proveedores-form .campo input {
     flex: 1;
     padding: 10px 14px;
-    border: 1px solid #d1d5db;
+    border: 1px solid var(--border);
     border-radius: 10px;
-    background: #f9fafb;
-    color: #111827;
+    background: var(--surface-alt);
+    color: var(--text);
     font-size: .95rem;
     outline: none;
     transition:
@@ -650,9 +701,9 @@ body {
 }
 
 .proveedores-form .campo input:focus {
-    border-color: #2563eb;
-    background: white;
-    box-shadow: 0 0 0 4px rgba(37, 99, 235, .12);
+    border-color: var(--primary);
+    background: var(--white);
+    box-shadow: 0 0 0 4px var(--primary-ring);
 }
 
 /* Último campo (botón) */
@@ -678,12 +729,11 @@ body {
     font-weight: 600;
     cursor: pointer;
 
-    background:
-        linear-gradient(135deg, #16a34a, #15803d);
-    color: white;
+    background: linear-gradient(135deg, var(--success), var(--success-dark));
+    color: var(--white);
 
     box-shadow:
-        0 6px 14px rgba(22, 163, 74, .25);
+        0 6px 14px var(--shadow-success);
 
     transition:
         transform .18s ease,
@@ -697,7 +747,7 @@ body {
 .proveedores-form .btn-agregar:hover {
     transform: translateY(-2px);
     box-shadow:
-        0 10px 20px rgba(22, 163, 74, .35);
+        0 10px 20px var(--shadow-success-strong);
 }
 
 /* ═══════════════════════════════════════════
@@ -705,15 +755,15 @@ body {
 ═══════════════════════════════════════════ */
 
 .cliente {
-    background: #ffffff;
+    background: var(--surface);
     border-radius: 18px;
     padding: 20px;
     margin-bottom: 25px;
     position: relative;
 
     box-shadow:
-        0 6px 18px rgba(0, 0, 0, .08),
-        0 2px 6px rgba(0, 0, 0, .04);
+        0 6px 18px var(--shadow-medium),
+        0 2px 6px var(--shadow-subtle);
 
     transition:
         transform .25s ease,
@@ -724,8 +774,8 @@ body {
     transform: translateY(-4px);
 
     box-shadow:
-        0 12px 28px rgba(0, 0, 0, .12),
-        0 4px 10px rgba(0, 0, 0, .06);
+        0 12px 28px var(--shadow-strong),
+        0 4px 10px var(--shadow-soft);
 }
 
 /* — ID badge — */
@@ -734,15 +784,15 @@ body {
     margin: 0 0 14px;
     padding: 4px 12px;
 
-    background: linear-gradient(135deg, #2563eb, #1d4ed8);
-    color: white;
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    color: var(--white);
 
     border-radius: 999px;
     font-size: 1rem;
     font-weight: 700;
     letter-spacing: .5px;
 
-    box-shadow: 0 4px 10px rgba(37, 99, 235, .25);
+    box-shadow: 0 4px 10px var(--shadow-primary);
 }
 
 /* — Campos — */
@@ -757,16 +807,16 @@ body {
     margin: 0;
     min-width: 90px;
     font-weight: 600;
-    color: #374151;
+    color: var(--text-light);
 }
 
 .cliente .campo input {
     flex: 1;
     padding: 10px 14px;
-    border: 1px solid #d1d5db;
+    border: 1px solid var(--border);
     border-radius: 10px;
-    background: #f9fafb;
-    color: #111827;
+    background: var(--surface-alt);
+    color: var(--text);
     font-size: .95rem;
     outline: none;
     transition:
@@ -776,13 +826,13 @@ body {
 }
 
 .cliente .campo input:focus {
-    border-color: #2563eb;
-    background: white;
-    box-shadow: 0 0 0 4px rgba(37, 99, 235, .12);
+    border-color: var(--primary);
+    background: var(--white);
+    box-shadow: 0 0 0 4px var(--primary-ring);
 }
 
 .cliente .campo input::placeholder {
-    color: #9ca3af;
+    color: var(--text-placeholder);
 }
 
 /* — Botones — */
@@ -812,15 +862,15 @@ body {
 }
 
 .cliente .update {
-    background: linear-gradient(135deg, #16a34a, #15803d);
-    color: white;
+    background: linear-gradient(135deg, var(--success), var(--success-dark));
+    color: var(--white);
     box-shadow:
-        0 6px 14px rgba(22, 163, 74, .25);
+        0 6px 14px var(--shadow-success);
 }
 
 .cliente .update:hover {
     box-shadow:
-        0 10px 20px rgba(22, 163, 74, .35);
+        0 10px 20px var(--shadow-success-strong);
 }
 
 .cliente .update::before {
@@ -828,15 +878,15 @@ body {
 }
 
 .cliente .delete {
-    background: linear-gradient(135deg, #dc2626, #b91c1c);
-    color: white;
+    background: linear-gradient(135deg, var(--danger), var(--danger-dark));
+    color: var(--white);
     box-shadow:
-        0 6px 14px rgba(220, 38, 38, .25);
+        0 6px 14px var(--shadow-danger);
 }
 
 .cliente .delete:hover {
     box-shadow:
-        0 10px 20px rgba(220, 38, 38, .35);
+        0 10px 20px var(--shadow-danger-strong);
 }
 
 .cliente .delete::before {
@@ -885,16 +935,16 @@ body {
     margin: 0;
     min-width: 90px;
     font-weight: 600;
-    color: #374151;
+    color: var(--text-light);
 }
 
 .clientes-form .campo input {
     flex: 1;
     padding: 10px 14px;
-    border: 1px solid #d1d5db;
+    border: 1px solid var(--border);
     border-radius: 10px;
-    background: #f9fafb;
-    color: #111827;
+    background: var(--surface-alt);
+    color: var(--text);
     font-size: .95rem;
     outline: none;
     transition:
@@ -904,14 +954,14 @@ body {
 }
 
 .clientes-form .campo input:focus {
-    border-color: #2563eb;
-    background: white;
+    border-color: var(--primary);
+    background: var(--white);
     box-shadow:
-        0 0 0 4px rgba(37, 99, 235, .12);
+        0 0 0 4px var(--primary-ring);
 }
 
 .clientes-form .campo input::placeholder {
-    color: #9ca3af;
+    color: var(--text-placeholder);
 }
 
 /* Último campo (botón) */
@@ -938,11 +988,11 @@ body {
     cursor: pointer;
 
     background:
-        linear-gradient(135deg, #16a34a, #15803d);
-    color: white;
+        linear-gradient(135deg, var(--success), var(--success-dark));
+    color: var(--white);
 
     box-shadow:
-        0 6px 14px rgba(22, 163, 74, .25);
+        0 6px 14px var(--shadow-success);
 
     transition:
         transform .18s ease,
@@ -956,7 +1006,7 @@ body {
 .clientes-form .btn-agregar:hover {
     transform: translateY(-2px);
     box-shadow:
-        0 10px 20px rgba(22, 163, 74, .35);
+        0 10px 20px var(--shadow-success-strong);
 }
 
 /* ═══════════════════════════════════════════
@@ -979,7 +1029,7 @@ body {
 ═══════════════════════════════════════════ */
 
 #catalogo .producto {
-    background: #ffffff;
+    background: var(--surface);
     border-radius: 18px;
     padding: 20px 20px 20px 190px;
     margin-bottom: 0;
@@ -990,8 +1040,8 @@ body {
     min-height: 190px;
 
     box-shadow:
-        0 6px 18px rgba(0, 0, 0, .08),
-        0 2px 6px rgba(0, 0, 0, .04);
+        0 6px 18px var(--shadow-medium),
+        0 2px 6px var(--shadow-subtle);
 
     transition:
         transform .25s ease,
@@ -1002,8 +1052,8 @@ body {
     transform: translateY(-4px);
 
     box-shadow:
-        0 12px 28px rgba(0, 0, 0, .12),
-        0 4px 10px rgba(0, 0, 0, .06);
+        0 12px 28px var(--shadow-strong),
+        0 4px 10px var(--shadow-soft);
 }
 
 
@@ -1023,11 +1073,11 @@ body {
     object-position: center;
 
     border-radius: 14px;
-    border: 2px solid #ececec;
-    background: #f0f0f0;
+    border: 2px solid var(--surface-border);
+    background: var(--surface-muted);
 
     box-shadow:
-        0 4px 12px rgba(0, 0, 0, .10);
+        0 4px 12px var(--shadow-faint);
 
     transition:
         transform .25s ease,
@@ -1047,13 +1097,13 @@ body {
     margin: 0 0 12px;
     font-size: 1.45rem;
     font-weight: 700;
-    color: #1f2937;
+    color: var(--text-strong);
     line-height: 1.2;
 }
 
 #catalogo .descripcion {
     margin: 0 0 14px;
-    color: #6b7280;
+    color: var(--text-muted);
     line-height: 1.55;
 }
 
@@ -1068,19 +1118,19 @@ body {
     border-radius: 10px;
 
     background:
-        linear-gradient(135deg, #16a34a, #15803d);
-    color: white;
+        linear-gradient(135deg, var(--success), var(--success-dark));
+    color: var(--white);
 
     font-size: 1.05rem;
     font-weight: 700;
 
     box-shadow:
-        0 4px 10px rgba(22, 163, 74, .25);
+        0 4px 10px var(--shadow-success);
 }
 
 #catalogo .proveedor {
     margin: 0;
-    color: #4b5563;
+    color: var(--text-medium);
     font-size: .95rem;
 }
 
@@ -1117,7 +1167,7 @@ body {
 /* Texto */
 #catalogo .descripcion {
     margin: 0;
-    color: #6b7280;
+    color: var(--text-muted);
     line-height: 1.55;
 
     max-height: 72px;
@@ -1157,9 +1207,9 @@ body {
 
     background:
         linear-gradient(to bottom,
-            rgba(255, 255, 255, 0),
-            rgba(255, 255, 255, .9),
-            #fff);
+            var(--white-transparent),
+            var(--fade-white),
+            var(--white));
 
     pointer-events: none;
 }
@@ -1194,11 +1244,11 @@ body {
     border: none;
     border-radius: 50%;
 
-    background: #fff;
-    color: #2563eb;
+    background: var(--surface);
+    color: var(--primary);
 
     box-shadow:
-        0 4px 12px rgba(0, 0, 0, .12);
+        0 4px 12px var(--shadow-strong);
 
     cursor: pointer;
     z-index: 10;
@@ -1214,10 +1264,9 @@ body {
 }
 
 #catalogo .expandir-desc:hover {
-    background: #2563eb;
-    color: #fff;
-    box-shadow:
-        0 8px 18px rgba(37, 99, 235, .25);
+    background: var(--primary);
+    color: var(--white);
+    box-shadow: 0 8px 18px var(--shadow-primary);
 }
 
 /* ═══════════════════════════════════════════
@@ -1230,7 +1279,7 @@ body {
 
 #catalogo .proveedor {
     margin: 0;
-    color: #4b5563;
+    color: var(--text-medium);
     font-size: .95rem;
     cursor: pointer;
     font-weight: 600;
@@ -1249,14 +1298,14 @@ body {
     min-width: 260px;
     padding: 14px 16px;
 
-    background: #fff;
+    background: var(--surface);
     border-radius: 14px;
 
     box-shadow:
-        0 10px 30px rgba(0, 0, 0, .14),
-        0 4px 10px rgba(0, 0, 0, .08);
+        0 10px 30px var(--shadow-deep),
+        0 4px 10px var(--shadow-medium);
 
-    border: 1px solid #e5e7eb;
+    border: 1px solid var(--border-muted);
 
     opacity: 0;
     visibility: hidden;
@@ -1278,7 +1327,7 @@ body {
     left: 18px;
 
     border: 8px solid transparent;
-    border-top-color: #fff;
+    border-top-color: var(--white);
 }
 
 /* Hover */
@@ -1291,7 +1340,7 @@ body {
 /* Texto */
 #catalogo .proveedor-info p {
     margin: 0 0 8px;
-    color: #4b5563;
+    color: var(--text-medium);
     font-size: .92rem;
     line-height: 1.4;
 }
@@ -1317,14 +1366,14 @@ body {
 ═══════════════════════════════════════════ */
 
 .filters-tab {
-    background: #ffffff;
+    background: var(--surface);
     border-radius: 18px;
     padding: 22px;
     margin-bottom: 28px;
 
     box-shadow:
-        0 6px 18px rgba(0, 0, 0, .08),
-        0 2px 6px rgba(0, 0, 0, .04);
+        0 6px 18px var(--shadow-medium),
+        0 2px 6px var(--shadow-subtle);
 
     transition:
         transform .25s ease,
@@ -1335,8 +1384,8 @@ body {
     transform: translateY(-3px);
 
     box-shadow:
-        0 12px 28px rgba(0, 0, 0, .12),
-        0 4px 10px rgba(0, 0, 0, .06);
+        0 12px 28px var(--shadow-strong),
+        0 4px 10px var(--shadow-soft);
 }
 
 /* Contenedor de filas */
@@ -1372,11 +1421,11 @@ body {
 
     padding: 10px 14px;
 
-    border: 1px solid #d1d5db;
+    border: 1px solid var(--border);
     border-radius: 10px;
 
-    background: #f9fafb;
-    color: #111827;
+    background: var(--surface-alt);
+    color: var(--text);
 
     font-size: .95rem;
     outline: none;
@@ -1389,10 +1438,10 @@ body {
 
 .filter-row select:focus,
 .filter-row input:focus {
-    border-color: #2563eb;
-    background: white;
+    border-color: var(--primary);
+    background: var(--white);
     box-shadow:
-        0 0 0 4px rgba(37, 99, 235, .12);
+        0 0 0 4px var(--primary-ring);
 }
 
 /* Botón agregar */
@@ -1406,11 +1455,11 @@ body {
     cursor: pointer;
 
     background:
-        linear-gradient(135deg, #16a34a, #15803d);
-    color: white;
+        linear-gradient(135deg, var(--success), var(--success-dark));
+    color: var(--white);
 
     box-shadow:
-        0 6px 14px rgba(22, 163, 74, .25);
+        0 6px 14px var(--shadow-success);
 
     transition:
         transform .18s ease,
@@ -1420,7 +1469,7 @@ body {
 .filters-tab>button:hover {
     transform: translateY(-2px);
     box-shadow:
-        0 10px 20px rgba(22, 163, 74, .35);
+        0 10px 20px var(--shadow-success-strong);
 }
 
 /* Botón eliminar */
@@ -1436,11 +1485,11 @@ body {
     cursor: pointer;
 
     background:
-        linear-gradient(135deg, #dc2626, #b91c1c);
-    color: white;
+        linear-gradient(135deg, var(--danger), var(--danger-dark));
+    color: var(--white);
 
     box-shadow:
-        0 6px 14px rgba(220, 38, 38, .25);
+        0 6px 14px var(--shadow-danger);
 
     transition:
         transform .18s ease,
@@ -1450,7 +1499,7 @@ body {
 .filter-row button:hover {
     transform: translateY(-2px);
     box-shadow:
-        0 10px 20px rgba(220, 38, 38, .35);
+        0 10px 20px var(--shadow-danger-strong);
 }
 
 .filter-row button:active {
@@ -1470,7 +1519,7 @@ body {
     padding-bottom: 18px;
 
     border-bottom:
-        1px solid rgba(0, 0, 0, .06);
+        1px solid var(--shadow-soft);
 }
 
 /* Select ORDER */
@@ -1480,11 +1529,11 @@ body {
 
     padding: 10px 14px;
 
-    border: 1px solid #d1d5db;
+    border: 1px solid var(--border);
     border-radius: 10px;
 
-    background: #f9fafb;
-    color: #111827;
+    background: var(--surface-alt);
+    color: var(--text);
 
     font-size: .95rem;
     outline: none;
@@ -1496,11 +1545,11 @@ body {
 }
 
 .order-row select:focus {
-    border-color: #2563eb;
-    background: white;
+    border-color: var(--primary);
+    background: var(--white);
 
     box-shadow:
-        0 0 0 4px rgba(37, 99, 235, .12);
+        0 0 0 4px var(--primary-ring);
 }
 
 /* Botón ASC / DESC */
@@ -1521,13 +1570,13 @@ body {
 
     background:
         linear-gradient(135deg,
-            #2563eb,
-            #1d4ed8);
+            var(--primary),
+            var(--primary-dark));
 
-    color: white;
+    color: var(--white);
 
     box-shadow:
-        0 6px 14px rgba(37, 99, 235, .25);
+        0 6px 14px var(--shadow-primary);
 
     transition:
         transform .18s ease,
@@ -1538,7 +1587,7 @@ body {
     transform: translateY(-2px);
 
     box-shadow:
-        0 10px 20px rgba(37, 99, 235, .35);
+        0 10px 20px var(--shadow-primary-strong);
 }
 
 .order-row button:active {
@@ -1564,15 +1613,15 @@ nav {
     margin: 0 auto 30px;
     padding: 6px 18px;
 
-    background: rgba(255, 255, 255, 0.693);
+    background: var(--nav-bg);
     backdrop-filter: blur(2px);
 
-    border: 1px solid rgba(255, 255, 255, .6);
+    border: 1px solid var(--white-translucent);
     border-radius: 18px;
 
     box-shadow:
-        0 8px 22px rgba(0, 0, 0, .08),
-        0 2px 8px rgba(0, 0, 0, .05);
+        0 8px 22px var(--shadow-medium),
+        0 2px 8px var(--shadow-xsoft);
 }
 
 /* Links / botones del nav */
@@ -1582,7 +1631,7 @@ nav a {
     padding: 11px 18px;
 
     background: transparent;
-    color: #374151;
+    color: var(--text-light);
 
     font-size: .95rem;
     font-weight: 600;
@@ -1602,21 +1651,21 @@ nav a:hover,
 nav button:hover {
     transform: translateY(-2px);
 
-    background: rgba(37, 99, 235, .10);
-    color: #2563eb;
+    background: var(--primary-bg);
+    color: var(--primary);
 
     box-shadow:
-        0 6px 14px rgba(37, 99, 235, .12);
+        0 6px 14px var(--primary-ring);
 }
 
 nav a.active,
 nav button.active {
     background:
-        linear-gradient(135deg, #2563eb, #1d4ed8);
-    color: white;
+        linear-gradient(135deg, var(--primary), var(--primary-dark));
+    color: var(--white);
 
     box-shadow:
-        0 6px 14px rgba(37, 99, 235, .25);
+        0 6px 14px var(--shadow-primary);
 }
 
 
@@ -1631,10 +1680,10 @@ select {
 
     padding: 10px 42px 10px 14px;
 
-    border: 1px solid #d1d5db;
+    border: 1px solid var(--border);
     border-radius: 10px;
 
-    color: #111827;
+    color: var(--text);
     font-size: .95rem;
     outline: none;
     cursor: pointer;
@@ -1646,21 +1695,21 @@ select {
 }
 
 select:hover {
-    background-color: #ffffff;
-    border-color: #c7d2fe;
+    background-color: var(--surface);
+    border-color: var(--focus-border);
 }
 
 select:focus {
-    border-color: #2563eb;
-    background-color: white;
+    border-color: var(--primary);
+    background-color: var(--white);
 
     box-shadow:
-        0 0 0 4px rgba(37, 99, 235, .12);
+        0 0 0 4px var(--primary-ring);
 }
 
 select option {
-    background: white;
-    color: #111827;
+    background: var(--white);
+    color: var(--text);
 
     border-radius: 8px;
 }

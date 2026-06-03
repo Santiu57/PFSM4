@@ -14,12 +14,11 @@ section.appendChild(agregar);
 const filterdata = {
     table: "productos",
     items: {
-        idProducto: "number",
-        nombre: "text",
-        descripcion: "text",
-        precio: "number",
-        imagen: "text",
-        nombreProveedor: "text"
+        idProducto: { type: "number", label: "ID del producto" },
+        nombre: { type: "text", label: "Nombre" },
+        descripcion: { type: "text", label: "Descripción" },
+        precio: { type: "number", label: "Precio" },
+        nombreProveedor: { type: "text", label: "Nombre del Proveedor" },
     },
 }
 
