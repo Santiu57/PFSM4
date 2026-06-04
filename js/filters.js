@@ -34,8 +34,8 @@ export class filters {
         orderRow.className = "order-row";
 
         // Label filters
-        const labelFIlters = document.createElement("h2");
-        labelFIlters.innerHTML = `Filtros para ${this.config.table}`
+        const labelFilters = document.createElement("h2");
+        labelFilters.innerHTML = `Filtros para ${this.config.table}`
 
         // Select campo 
         const orderCampo = document.createElement("select");
@@ -215,7 +215,7 @@ export class filters {
         tab.append(
             labelOrder,
             orderRow,
-            labelFIlters,
+            labelFilters,
             addBtn,
             container
         );

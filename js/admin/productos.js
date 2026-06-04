@@ -290,3 +290,5 @@ function limpiarCampos() {
     agregar.querySelector(".imagen-input-agregar").value = "";
     agregar.querySelector(".imagen-preview-agregar").style.display = "none";
 }
+
+limpiarCampos();

@@ -2,11 +2,17 @@
 
 require_once("conexion.php");
 
+/*
+    table: nombre de la tabla
+    where: condición para eliminar (ejemplo: "idProducto = 5")
+    id: id del producto (solo necesario si se va a eliminar una imagen)
+*/
+
 if ($data = json_decode(file_get_contents("php://input"), true)) {
     $mysql_query = "DELETE FROM " . $data['table'] . " WHERE " . $data['where'];
 
     if ($data['table'] === "productos") {
-        $sqlruta = "SELECT imagen FROM productos WHERE idProducto = " . $data['id'];
+        $sqlruta = 'SELECT imagen FROM productos WHERE idProducto = ' . $data['id'];
         $resultado = mysqli_query($conn, $sqlruta);
         $row = mysqli_fetch_assoc($resultado);
         $ruta = $row['imagen'];

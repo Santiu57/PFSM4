@@ -2,31 +2,57 @@
 <html>
 
 <head>
-    <title>Cafeteria</title>
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="icon" type="image/webp" href="img/ui/icon.webp">
+	<title>Cafeteria</title>
+	<link rel="stylesheet" href="css/style.css">
+	<link rel="icon" type="image/webp" href="img/ui/icon.webp">
 </head>
 
 <body>
-    <header>
-        <h1>Home</h1>
-    </header>
-    <nav>
-        <a href="index.php">Home</a>
-        <a href="nosotros.php">Nosotros</a>
-        <a href="catalogo.php">Catalogo</a>
-        <a href="contacto.php">Contacto</a>
-        <a href="admin.php">Admin</a>
-    </nav>
-    <main>
+	<header>
+		<h1>Home</h1>
+	</header>
+	<nav>
+		<a class="<?= basename($_SERVER['PHP_SELF']) == 'index.php' ? 'active' : '' ?>" href="index.php">Home</a>
+		<a class="<?= basename($_SERVER['PHP_SELF']) == 'nosotros.php' ? 'active' : '' ?>"
+			href="nosotros.php">Nosotros</a>
+		<a class="<?= basename($_SERVER['PHP_SELF']) == 'catalogo.php' ? 'active' : '' ?>"
+			href="catalogo.php">Catálogo</a>
+		<a class="<?= basename($_SERVER['PHP_SELF']) == 'contacto.php' ? 'active' : '' ?>"
+			href="contacto.php">Contacto</a>
+		<a class="<?= basename($_SERVER['PHP_SELF']) == 'admin.php' ? 'active' : '' ?>" href="admin.php">Admin</a>
 
-    </main>
+		<div class="toggle-dark-mode">
+			<input type="checkbox" id="darkModeToggle">
+			<label for="darkModeToggle"></label>
+		</div>
+	</nav>
 
-    <footer>
+	<script src="js/darkMode.js"></script>
 
-    </footer>
+	<main>
+		<h2>bienvenido</h2>
+		<section class="proveedor">
+			<p>¿Quieres ordenar algo?</p>
+			<p>Presiona el siguente boton para poder ordenar.</p>
+			<a href="catalogo.php">ordena lo que mas se te antoje</a>
+		</section>
+		<section class="proveedor">
+			<p>¿Deseas conocernos?</p>
+			<p>Entoces presiona el siguente boton para culturizarte.</p>
+			<a href="nosotros.php">conocenos</a>
+		</section>
+		<section class="proveedor">
+			<p>¿Quieres que promocionemos tu marca o trabajar con nosotros?</p>
+			<p>¡Entonces dale! contacta con nosotros para ponernos de acuerdo.</p>
+			<a href="contacto.php">Contactanos</a>
+		</section>
+	</main>
 
-    <script src="js/edit.js"></script>
+	<footer>
+		<p>© Cafeteria Kokomilk</p>
+	</footer>
+
+	<script src="js/edit.js"></script>
 </body>
 
 </html>

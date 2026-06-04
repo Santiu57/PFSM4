@@ -34,7 +34,7 @@ switch ($_POST["table"]) {
 
     case "proveedores":
 
-        $nombre = $_POST["nombre"] ?? "nombre";
+        $nombre = $_POST["nombreProveedor"] ?? "";
         $telefono = $_POST["telefono"] ?? "";
         $correo = $_POST["correo"] ?? "";
         $direccion = $_POST["direccion"] ?? "";
@@ -45,7 +45,7 @@ switch ($_POST["table"]) {
         break;
 
     case "clientes":
-        $nombre = $_POST["nombre"] ?? "nombre";
+        $nombre = $_POST["nombre"] ?? "";
         $telefono = $_POST["telefono"] ?? "";
         $correo = $_POST["correo"] ?? "";
 

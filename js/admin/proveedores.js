@@ -234,6 +234,7 @@ async function eliminarProducto(id) {
             "Content-Type": "application/json"
         },
         body: JSON.stringify({
+            id,
             where: `idProducto = ${id}`,
             table: "productos"
         })
@@ -303,47 +304,26 @@ agregar
     .querySelector(".btn-agregar")
     .addEventListener("click", async () => {
 
-        const nombre = agregar
-            .querySelector(".nombre-nuevo")
-            .value.trim();
+        const nombre = agregar.querySelector(".nombre-nuevo").value.trim();
+        const telefono = agregar.querySelector(".telefono-nuevo").value.trim();
+        const correo = agregar.querySelector(".correo-nuevo").value.trim();
+        const direccion = agregar.querySelector(".direccion-nueva").value.trim();
 
-        const telefono = agregar
-            .querySelector(".telefono-nuevo")
-            .value.trim();
+        if (!nombre || !telefono || !correo || !direccion) {
 
-        const correo = agregar
-            .querySelector(".correo-nuevo")
-            .value.trim();
-
-        const direccion = agregar
-            .querySelector(".direccion-nueva")
-            .value.trim();
-
-        if (
-            !nombre ||
-            !telefono ||
-            !correo ||
-            !direccion
-        ) {
-
-            let message =
-                "Por favor completa todos los campos.\n";
+            let message = "Por favor completa todos los campos.\n";
 
             if (!nombre)
-                message +=
-                    "Por favor ingresa el nombre del proveedor.\n";
+                message += "Por favor ingresa el nombre del proveedor.\n";
 
             if (!telefono)
-                message +=
-                    "Por favor ingresa el teléfono del proveedor.\n";
+                message += "Por favor ingresa el teléfono del proveedor.\n";
 
             if (!correo)
-                message +=
-                    "Por favor ingresa el correo del proveedor.\n";
+                message += "Por favor ingresa el correo del proveedor.\n";
 
             if (!direccion)
-                message +=
-                    "Por favor ingresa la dirección del proveedor.\n";
+                message += "Por favor ingresa la dirección del proveedor.\n";
 
             alert(message);
             return;
@@ -351,30 +331,11 @@ agregar
 
         const formData = new FormData();
 
-        formData.append(
-            "nombreProveedor",
-            nombre
-        );
-
-        formData.append(
-            "telefono",
-            telefono
-        );
-
-        formData.append(
-            "correo",
-            correo
-        );
-
-        formData.append(
-            "direccion",
-            direccion
-        );
-
-        formData.append(
-            "table",
-            "proveedores"
-        );
+        formData.append("nombreProveedor", nombre);
+        formData.append("telefono", telefono);
+        formData.append("correo", correo);
+        formData.append("direccion", direccion);
+        formData.append("table", "proveedores");
 
         try {
             const response = await fetch("./php/insert.php", {
@@ -385,12 +346,9 @@ agregar
 
             alert(text);
 
-            proveedoresContainer.innerHTML = "";
             load(); // Actualizar sin reload
             limpiarCampos();
-            dispatchEvent(
-                new Event("updateProveedores")
-            );
+            dispatchEvent(new Event("updateProveedores"));
         } catch (error) {
 
             console.error(error);

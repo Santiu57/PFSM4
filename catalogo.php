@@ -18,12 +18,23 @@ require_once("php/conexion.php");
         <h1>Catalogo</h1>
     </header>
     <nav>
-        <a href="index.php">Home</a>
-        <a href="nosotros.php">Nosotros</a>
-        <a href="catalogo.php">Catalogo</a>
-        <a href="contacto.php">Contacto</a>
-        <a href="admin.php">Admin</a>
+        <a class="<?= basename($_SERVER['PHP_SELF']) == 'index.php' ? 'active' : '' ?>" href="index.php">Home</a>
+        <a class="<?= basename($_SERVER['PHP_SELF']) == 'nosotros.php' ? 'active' : '' ?>"
+            href="nosotros.php">Nosotros</a>
+        <a class="<?= basename($_SERVER['PHP_SELF']) == 'catalogo.php' ? 'active' : '' ?>"
+            href="catalogo.php">Catálogo</a>
+        <a class="<?= basename($_SERVER['PHP_SELF']) == 'contacto.php' ? 'active' : '' ?>"
+            href="contacto.php">Contacto</a>
+        <a class="<?= basename($_SERVER['PHP_SELF']) == 'admin.php' ? 'active' : '' ?>" href="admin.php">Admin</a>
+
+        <div class="toggle-dark-mode">
+            <input type="checkbox" id="darkModeToggle">
+            <label for="darkModeToggle"></label>
+        </div>
     </nav>
+
+    <script src="js/darkMode.js"></script>
+
     <main>
         <section id="catalogo">
 
