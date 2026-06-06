@@ -2,6 +2,15 @@
 
 require_once("conexion.php");
 
+/*
+    Recibe datos de un formulario y los inserta en la tabla correspondiente.
+    Para productos, también maneja la imagen.
+
+    POST:
+    - table: productos, proveedores o clientes
+    - Otros campos según la tabla (ver switch)
+*/
+
 // Verificar que exista table
 if (!isset($_POST["table"])) {
     die("No se recibió table");
@@ -10,6 +19,15 @@ if (!isset($_POST["table"])) {
 switch ($_POST["table"]) {
 
     case "productos":
+
+        /*
+            Productos:
+            - nombre
+            - descripcion
+            - precio
+            - proveedor (idProveedor)
+            - imagen (archivo)
+        */
 
         $nombre = $_POST["nombre"] ?? "";
         $descripcion = $_POST["descripcion"] ?? "";
@@ -34,6 +52,14 @@ switch ($_POST["table"]) {
 
     case "proveedores":
 
+        /*
+            Proveedores:
+            - nombreProveedor
+            - telefono
+            - correo
+            - direccion
+        */
+
         $nombre = $_POST["nombreProveedor"] ?? "";
         $telefono = $_POST["telefono"] ?? "";
         $correo = $_POST["correo"] ?? "";
@@ -45,6 +71,12 @@ switch ($_POST["table"]) {
         break;
 
     case "clientes":
+        /*
+            Clientes:
+            - nombre
+            - telefono
+            - correo
+        */
         $nombre = $_POST["nombre"] ?? "";
         $telefono = $_POST["telefono"] ?? "";
         $correo = $_POST["correo"] ?? "";
@@ -67,13 +99,20 @@ if (mysqli_query($conn, $sql)) {
 
 mysqli_close($conn);
 
+/**
+ * Copia una imagen subida a la carpeta de imágenes y devuelve la ruta.
+ * @param mixed $archivo - El archivo de imagen (de $_FILES)
+ * @param mixed $nombre - El nombre del producto para generar el nombre del archivo
+ * @param mixed $conn - La conexión a la base de datos para obtener el último ID
+ * @return string | bool
+ */
 function copyImage($archivo, $nombre, $conn)
 {
     $carpeta = "C:/xampp/htdocs/PFSM4/img/productos/";
 
     if ($archivo["error"] === 0) {
 
-        // Obtener último ID
+        // Obtener último ID para nombrar la imagen con el formato ID_nombre.extensión
         $query = "SELECT MAX(idProducto) AS ultimo FROM productos";
         $result = mysqli_query($conn, $query);
         $row = mysqli_fetch_assoc($result);

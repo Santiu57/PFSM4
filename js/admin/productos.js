@@ -127,7 +127,7 @@ async function load(desc = false, order = "idProducto", where = "") {
 
 // ─── Delegación de clicks (update / delete) ──────────────────────────────────
 
-section.addEventListener("click", e => {
+productosContainer.addEventListener("click", e => {
     const card = e.target.closest(".producto");
     if (!card) return;
 
@@ -139,7 +139,7 @@ section.addEventListener("click", e => {
 
 // ─── Preview de imagen en tarjetas existentes ────────────────────────────────
 
-section.addEventListener("change", e => {
+productosContainer.addEventListener("change", e => {
     if (!e.target.classList.contains("imagen-input")) return;
 
     const card = e.target.closest(".producto");
@@ -290,5 +290,3 @@ function limpiarCampos() {
     agregar.querySelector(".imagen-input-agregar").value = "";
     agregar.querySelector(".imagen-preview-agregar").style.display = "none";
 }
-
-limpiarCampos();

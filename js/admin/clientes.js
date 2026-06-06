@@ -102,7 +102,7 @@ async function load(desc = false, order = "idCliente", where = "") {
 }
 
 // ─── Delegación de clicks (update / delete) ─────────────────────────────────
-section.addEventListener("click", e => {
+clientesContainer.addEventListener("click", e => {
 
     const card = e.target.closest(".cliente");
     if (!card) return;

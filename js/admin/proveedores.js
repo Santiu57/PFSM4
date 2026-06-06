@@ -124,7 +124,7 @@ async function load(desc = false, order = "idProveedor", where = "") {
 }
 
 // ─── Delegación de clicks (update / delete) ────────────────────────────────
-section.addEventListener("click", e => {
+proveedoresContainer.addEventListener("click", e => {
 
     const card = e.target.closest(".proveedor");
     if (!card) return;
@@ -206,9 +206,7 @@ async function eliminarProveedor(id) {
         )
         ?.remove();
 
-    dispatchEvent(
-        new Event("updateProveedores")
-    );
+    dispatchEvent(new Event("updateProveedores"));
 }
 
 // ─── Eliminar productos asociados ───────────────────────────────────────────

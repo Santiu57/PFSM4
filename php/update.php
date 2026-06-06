@@ -2,9 +2,29 @@
 
 include("../php/conexion.php");
 
+/*
+    Recibe datos de un formulario para actualizar un registro en la tabla correspondiente.
+    Para productos, también maneja la imagen (borrar anterior si se cambió, o renombrar si solo cambió el nombre).
+
+    POST:
+    - table: productos, proveedores o clientes
+    - Otros campos según la tabla (ver switch)
+*/
+
 if ($_POST) {
 
     switch ($_POST["table"]) {
+
+        /*
+            Productos:
+            - id
+            - nombre
+            - descripcion
+            - precio
+            - proveedor (idProveedor)
+            - imagen (archivo, opcional)
+        */
+
         case "productos":
             $id = $_POST["id"];
             $nombre = $_POST["nombre"];
@@ -13,12 +33,7 @@ if ($_POST) {
             $proveedor = $_POST["proveedor"];
 
             // Obtener imagen actual
-            $query = mysqli_query(
-                $conn,
-                "SELECT imagen
-                FROM productos
-                WHERE idProducto = $id"
-            );
+            $query = mysqli_query($conn, "SELECT imagen FROM productos WHERE idProducto = $id");
 
             $row = mysqli_fetch_assoc($query);
 
@@ -27,35 +42,22 @@ if ($_POST) {
             $imagenFinal = $imagenActual;
 
             // nombre limpio
-            $nombreLimpio =
-                preg_replace(
-                    "/[^a-zA-Z0-9_-]/",
-                    "_",
-                    $nombre
-                );
+            $nombreLimpio = preg_replace(
+                "/[^a-zA-Z0-9_-]/",
+                "_",
+                $nombre
+            );
 
             // Si se cambio la imagen -> borrar anterior y guardar nueva
-            if (
-                isset($_FILES["imagen"]) &&
-                $_FILES["imagen"]["error"] == 0
-            ) {
+            if (isset($_FILES["imagen"]) && $_FILES["imagen"]["error"] == 0) {
 
                 // borrar anterior
-                if (
-                    file_exists(
-                        $rutaActual
-                    )
-                ) {
-                    unlink(
-                        $rutaActual
-                    );
+                if (file_exists($rutaActual)) {
+                    unlink($rutaActual);
                 }
 
                 // guardar nueva
-                $imagenNueva = copyImage(
-                    $_FILES["imagen"],
-                    $nombre
-                );
+                $imagenNueva = copyImage($_FILES["imagen"], $nombre, $id);
 
                 if (!$imagenNueva) {
                     die("Error al guardar imagen");
@@ -93,6 +95,15 @@ if ($_POST) {
 
         case "proveedores":
 
+            /*
+                Proveedores:
+                - id
+                - nombreProveedor
+                - telefono
+                - correo
+                - direccion
+            */
+
             $id = $_POST["idProveedor"];
             $nombreProveedor = $_POST["nombreProveedor"];
             $telefono = $_POST["telefono"];
@@ -110,6 +121,16 @@ if ($_POST) {
             break;
 
         case "clientes":
+
+            /*
+                Clientes:
+                - id
+                - nombre
+                - telefono
+                - correo
+                - direccion
+            */
+
             $id = $_POST["idCliente"];
             $nombre = $_POST["nombre"];
             $telefono = $_POST["telefono"];
@@ -137,46 +158,27 @@ if ($_POST) {
     echo "No se recibieron datos";
 }
 
-function copyImage(
-    $archivo,
-    $nombre
-) {
+/**
+ * Copia la imagen subida a la carpeta de imágenes y devuelve la ruta relativa.
+ * @param mixed $archivo -- el array de la imagen subida ($_FILES["campo"])
+ * @param mixed $nombre -- el nombre del producto para generar el nombre del archivo
+ * @param mixed $id -- el id del producto para generar el nombre del archivo (subfijo)
+ * @return bool|string
+ */
+function copyImage($archivo, $nombre, $id)
+{
+    $carpeta = "C:/xampp/htdocs/PFSM4/img/productos/";
 
-    $carpeta =
-        "C:/xampp/htdocs/PFSM4/img/productos/";
+    if ($archivo["error"] === 0) {
 
-    if (
-        $archivo["error"] === 0
-    ) {
+        $extension = pathinfo($archivo["name"], PATHINFO_EXTENSION);
 
-        $extension =
-            pathinfo(
-                $archivo["name"],
-                PATHINFO_EXTENSION
-            );
+        $nuevoNombre = $id . "_" . preg_replace("/[^a-zA-Z0-9_-]/", "_", $nombre) . "." . $extension;
 
-        $nuevoNombre =
-            preg_replace(
-                "/[^a-zA-Z0-9_-]/",
-                "_",
-                $nombre
-            ) .
-            "." .
-            $extension;
+        $rutaFinal = $carpeta . $nuevoNombre;
 
-        $rutaFinal =
-            $carpeta .
-            $nuevoNombre;
-
-        if (
-            move_uploaded_file(
-                $archivo["tmp_name"],
-                $rutaFinal
-            )
-        ) {
-            return
-                "img/productos/" .
-                $nuevoNombre;
+        if (move_uploaded_file($archivo["tmp_name"], $rutaFinal)) {
+            return "img/productos/" . $nuevoNombre;
         }
     }
 

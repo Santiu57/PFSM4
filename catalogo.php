@@ -11,6 +11,7 @@ require_once("php/conexion.php");
     <title>Catalogo</title>
     <link rel="icon" type="image/webp" href="img/ui/icon.webp">
     <link rel="stylesheet" href="css/style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
 <body>
