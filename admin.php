@@ -13,7 +13,7 @@
         <h1>Admin</h1>
     </header>
     <nav>
-        <a class="<?= basename($_SERVER['PHP_SELF']) == 'index.php' ? 'active' : '' ?>" href="index.php">Home</a>
+        <a class="<?= basename($_SERVER['PHP_SELF']) == 'index.php' ? 'active' : '' ?>" href="./index.php">Home</a>
         <a class="<?= basename($_SERVER['PHP_SELF']) == 'nosotros.php' ? 'active' : '' ?>"
             href="nosotros.php">Nosotros</a>
         <a class="<?= basename($_SERVER['PHP_SELF']) == 'catalogo.php' ? 'active' : '' ?>"
@@ -35,19 +35,19 @@
         <section id="productos">
 
         </section>
-        <script src="js/admin/productos.js" type="module"></script>
+        <script src="Admin/productos.js" type="module"></script>
 
         <h2>Proveedores</h2>
         <section id="proveedores">
 
         </section>
-        <script src="js/admin/proveedores.js" type="module"></script>
+        <script src="Admin/proveedores.js" type="module"></script>
 
         <h2>Clientes</h2>
         <section id="clientes">
 
         </section>
-        <script src="js/admin/clientes.js" type="module"></script>
+        <script src="Admin/clientes.js" type="module"></script>
     </main>
     <footer>
 

@@ -47,6 +47,7 @@
     --white-transparent: rgba(255, 255, 255, 0);
     --white-translucent: rgba(255, 255, 255, .6);
     --primary-bg: rgba(37, 99, 235, .10);
+    --lower-primary-bg: rgba(37, 100, 235, 0.05);
     --primary-ring: rgba(37, 99, 235, .12);
     --focus-border: #c7d2fe;
     --shadow-xsoft: rgba(0, 0, 0, .04);
@@ -113,6 +114,7 @@ body.dark-mode {
     --white-transparent: rgba(255, 255, 255, 0);
     --white-translucent: rgba(31, 41, 55, .60);
     --primary-bg: rgba(59, 130, 246, .15);
+    --lower-primary-bg: rgba(59, 130, 246, .08);
     --primary-ring: rgba(59, 130, 246, .20);
     --focus-border: #60a5fa;
 
@@ -1728,7 +1730,7 @@ nav {
 }
 
 /* Links / botones del nav */
-nav a {
+a {
     border: none;
     border-radius: 12px;
     padding: 11px 18px;
@@ -1750,7 +1752,7 @@ nav a {
         box-shadow .18s ease;
 }
 
-nav a:hover,
+a:hover,
 nav button:hover {
     transform: translateY(-2px);
 
@@ -1898,4 +1900,65 @@ select option {
 /* Hover */
 .toggle-dark-mode label:hover::before {
     box-shadow: 0 0 0 4px var(--primary-ring);
+}
+
+/*  
+    Tarjetas, botones, inputs, selects, nav, etc. tienen un diseño consistente con bordes redondeados, sombras suaves y transiciones para interacciones.
+*/
+
+.tarjeta {
+    background: var(--surface);
+    border-radius: 18px;
+    padding: 20px;
+    margin-bottom: 25px;
+    position: relative;
+
+    box-shadow:
+        0 6px 18px var(--shadow-medium),
+        0 2px 6px var(--shadow-subtle);
+
+    transition:
+        transform .25s ease,
+        box-shadow .25s ease;
+}
+
+.tarjeta:hover {
+    transform: translateY(-4px);
+
+    box-shadow:
+        0 12px 28px var(--shadow-strong),
+        0 4px 10px var(--shadow-soft);
+}
+
+.tarjeta a{
+    background: var(--lower-primary-bg);;
+    
+}
+
+.boton {
+    border: none;
+    border-radius: 12px;
+    padding: 11px 20px;
+
+    font-size: .95rem;
+    font-weight: 600;
+    cursor: pointer;
+
+    background:
+        linear-gradient(135deg, var(--primary), var(--primary-dark));
+    color: var(--white);
+
+    box-shadow:
+        0 6px 14px var(--shadow-primary);
+
+    transition:
+        transform .18s ease,
+        box-shadow .18s ease;
+}
+
+.boton:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 10px 20px var(--shadow-primary-strong);
 }

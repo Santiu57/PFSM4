@@ -1,4 +1,4 @@
-import { filters } from "../filters.js";
+import { filters } from "../js/filters.js";
 
 const section = document.getElementById("clientes");
 

@@ -1,6 +1,6 @@
 // ─── Imports y constantes globales ──────────────────────────────────────────
-import { ListaProveedores } from "../listaProveedores.js";
-import { filters } from "../filters.js"
+import { ListaProveedores } from "../js/listaProveedores.js";
+import { filters } from "../js/filters.js"
 
 const section = document.getElementById("productos");
 
