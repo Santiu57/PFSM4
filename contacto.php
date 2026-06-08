@@ -31,7 +31,18 @@
     <script src="js/darkMode.js"></script>
 
     <main>
-
+        <section class="tarjetas">
+            <article class="tarjeta">
+                <h2>Contáctanos</h2>
+                <p>Si tienes alguna pregunta, sugerencia o simplemente deseas ponerte en contacto con nosotros, no dudes
+                    en hacerlo. Estamos aquí para ayudarte y escucharte.</p>
+                <p>Puedes contactarnos a través de los siguientes medios:</p>
+                <ul>
+                    <li><strong>📞 Teléfono:</strong> +52 871 569 890</li>
+                    <li><strong>✉️ Email:</strong> kokomilk-atencion@gmail.com</li>
+                </ul>
+            </article>
+        </section>
     </main>
 
     <footer>
