@@ -33,21 +33,21 @@
 
     <main>
         <h2>Bienvenido</h2>
-        <section class="tarjeta">
+        <section class="tarjetas">
             <article class="tarjeta">
-                <p>¿Deseas ver nuestro catálogo?</p>
-                <p>Aquí encontrarás todo lo que necesitas.</p>
-                <a href="catalogo.php">Ver catálogo</a>
+                <p class="up">¿Deseas ver nuestro catálogo?</p>
+                <p class="middle">Aquí encontrarás todo lo que necesitas.</p>
+                <a class="down" href="catalogo.php">Ver catálogo</a>
             </article>
             <article class="tarjeta">
-                <p>¿Deseas conocernos?</p>
-                <p>Entonces presiona el siguente boton para culturizarte.</p>
-                <a href="nosotros.php">conocenos</a>
+                <p class="up">¿Deseas conocernos?</p>
+                <p class="middle">Aqui encontrarás más información sobre nosotros.</p>
+                <a class="down" href="nosotros.php">Conocenos</a>
             </article>
             <article class="tarjeta">
-                <p>¿Quieres que promocionemos tu marca o trabajar con nosotros?</p>
-                <p>¡Entonces dale! contacta con nosotros para ponernos de acuerdo.</p>
-                <a href="contacto.php">Contactanos</a>
+                <p class="up">¿Deseas contactarnos?</p>
+                <p class="middle">Estamos aquí para ayudarte.</p>
+                <a class="down" href="contacto.php">Contactanos</a>
             </article>
         </section>
     </main>

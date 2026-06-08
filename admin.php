@@ -50,7 +50,7 @@
         <script src="Admin/clientes.js" type="module"></script>
     </main>
     <footer>
-
+        <p>© Cafeteria Kokomilk</p>
     </footer>
 </body>
 

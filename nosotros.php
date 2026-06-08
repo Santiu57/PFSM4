@@ -34,10 +34,8 @@
     </main>
 
     <footer>
-
+        <p>© Cafeteria Kokomilk</p>
     </footer>
-
-    <script src="js/edit.js"></script>
 </body>
 
 </html>

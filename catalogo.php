@@ -43,7 +43,7 @@ require_once("php/conexion.php");
     </main>
 
     <footer>
-
+        <p>© Cafeteria Kokomilk</p>
     </footer>
 
     <script src="js/catalogo.js" type="module"></script>
