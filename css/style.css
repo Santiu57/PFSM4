@@ -228,7 +228,6 @@ footer {
 
     width: 150px;
     height: 150px;
-    padding: 10px;
 
     border-radius: 14px;
     overflow: hidden;
@@ -1907,7 +1906,7 @@ select option {
 }
 
 /*  
-    Tarjetas, botones, inputs, selects, nav, etc. tienen un diseño consistente con bordes redondeados, sombras suaves y transiciones para interacciones.
+    Tarjetas, catálogo, y sección "Nosotros"
 */
 
 .tarjetas{

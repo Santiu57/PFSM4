@@ -25,7 +25,7 @@ function getCookie(nombre) {
     return null;
 }
 
-// Cambiar el toggle segun la cookie
+// Cambiar el toggle segun la cookie y añadir el evento para cambiar el modo oscuro
 const toggle = document.getElementById("darkModeToggle");
 
 document.addEventListener("DOMContentLoaded", () => {

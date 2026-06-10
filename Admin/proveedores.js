@@ -61,6 +61,7 @@ async function load(desc = false, order = "idProveedor", where = "") {
     let data;
     try {
         data = JSON.parse(text);
+        console.log("Proveedores cargados:", data);
     } catch {
         console.error("Respuesta no JSON:", text);
         return;

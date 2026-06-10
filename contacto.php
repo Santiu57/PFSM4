@@ -39,7 +39,7 @@
                 <p>Puedes contactarnos a través de los siguientes medios:</p>
                 <ul>
                     <li><strong>📞 Teléfono:</strong> +52 871 569 890</li>
-                    <li><strong>✉️ Email:</strong> kokomilk-atencion@gmail.com</li>
+                    <li><strong>✉️ Email:</strong> atencion@kokomilk.com</li>
                 </ul>
             </article>
         </section>
@@ -47,6 +47,9 @@
 
     <footer>
         <p>© Cafeteria Kokomilk</p>
+        <p>CBTIS 4 Programación</p>
+        <p>4° Semestre </p>
+        <p>Eq006</p>
     </footer>
 </body>
 

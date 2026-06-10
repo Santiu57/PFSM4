@@ -4,6 +4,7 @@ export class ListaProveedores {
         this.options = "";
         this.clones = [];
 
+        // Evento personalizado para actualizar los proveedores en caso de cambios
         window.addEventListener(
             "updateProveedores",
             () => this.update()

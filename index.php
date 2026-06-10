@@ -54,6 +54,9 @@
 
     <footer>
         <p>© Cafeteria Kokomilk</p>
+        <p>CBTIS 4 Programación</p>
+        <p>4° Semestre </p>
+        <p>Eq006</p>
     </footer>
 </body>
 

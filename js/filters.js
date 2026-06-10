@@ -230,8 +230,7 @@ export class filters {
     ) {
 
         // Obtiene todas las filas activas del DOM
-        const rows =
-            container.querySelectorAll(".filter-row");
+        const rows = container.querySelectorAll(".filter-row");
 
         // Aquí se irán acumulando las condiciones SQL
         const where = [];
@@ -241,30 +240,22 @@ export class filters {
             // children[0] = campo
             // children[1] = operador
             // children[2] = valor
-            const campo =
-                row.children[0].value;
-
-            const op =
-                row.children[1].value;
-
-            const value =
-                row.children[2].value;
+            const campo = row.children[0].value;
+            const op = row.children[1].value;
+            const value = row.children[2].value;
 
             // Ignora filtros vacíos para evitar
             // condiciones inválidas como:
             // nombre LIKE '%%'
             if (!value) return;
 
-            const type =
-                this.config.items[campo];
+            const type = this.config.items[campo];
 
             if (type === "number") {
 
                 // Para números se genera SQL directo:
                 // precio > 50
-                where.push(
-                    `${campo} ${op} ${value}`
-                );
+                where.push( `${campo} ${op} ${value}` );
             }
             else {
 
@@ -272,9 +263,7 @@ export class filters {
 
                     // LIKE permite coincidencia parcial:
                     // nombre LIKE '%mesa%'
-                    where.push(
-                        `${campo} LIKE '%${value}%'`
-                    );
+                    where.push( `${campo} LIKE '%${value}%'` );
                 }
                 else {
 

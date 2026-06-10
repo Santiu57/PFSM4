@@ -57,7 +57,7 @@ CREATE TABLE `productos` (
   PRIMARY KEY (`idProducto`) USING BTREE,
   KEY `FK_productos_proveedores` (`idProveedor`),
   CONSTRAINT `FK_productos_proveedores` FOREIGN KEY (`idProveedor`) REFERENCES `proveedores` (`idProveedor`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -66,6 +66,7 @@ CREATE TABLE `productos` (
 
 LOCK TABLES `productos` WRITE;
 /*!40000 ALTER TABLE `productos` DISABLE KEYS */;
+INSERT INTO `productos` VALUES (1,'Coca Cola 600ml','Refresco sabor cola en botella de 600 ml.',22,'img/productos/1_Coca_Cola_600ml.png',1),(2,'Coca Cola Sin Azúcar 600ml','Refresco sin azúcar en botella de 600 ml.',22,'img/productos/2_Coca_Cola_Sin_Az__car_600ml.png',1),(3,'Chocolala 500ml','Leche saborizada a chocolate en envase de 500ml',24,'img/productos/Chocolala_500ml.png',2);
 /*!40000 ALTER TABLE `productos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -83,7 +84,7 @@ CREATE TABLE `proveedores` (
   `correo` varchar(100) NOT NULL,
   `direccion` varchar(100) NOT NULL,
   PRIMARY KEY (`idProveedor`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -92,7 +93,7 @@ CREATE TABLE `proveedores` (
 
 LOCK TABLES `proveedores` WRITE;
 /*!40000 ALTER TABLE `proveedores` DISABLE KEYS */;
-INSERT INTO `proveedores` VALUES (1,'Coca‑Cola','800 704 4400','consumidor@coca-cola.com','Av. El Molino 1000, Tlajomulco de Zúñiga, Jalisco, México');
+INSERT INTO `proveedores` VALUES (1,'Coca‑Cola','800 704 4400','consumidor@coca-cola.com','Av. El Molino 1000, Tlajomulco de Zúñiga, Jalisco, México'),(2,'Grupo Lala','528711234567','contacto@lala.com.mx','Torreón, Coahuila'),(3,'Nestlé Professional México','528713456789','contacto@nestle.com','Ciudad de México'),(4,'Grupo Bimbo','528715678901','contactanos@grupobimbo.com','Ciudad de México'),(5,'Gamesa','528716789012','atencionconsumidor@pepsico.com','Ciudad de México'),(6,'PepsiCo México','528717890123','consumidor@pepsico.com','Ciudad de México'),(7,'Santa Clara','528719012345','contacto@santaclara.com.mx','Pachuca, Hidalgo');
 /*!40000 ALTER TABLE `proveedores` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -105,4 +106,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-06-09 17:27:21
+-- Dump completed on 2026-06-10 11:12:29

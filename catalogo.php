@@ -42,11 +42,15 @@ require_once("php/conexion.php");
         </section>
     </main>
 
+    <script src="js/catalogo.js" type="module"></script>
+
     <footer>
         <p>© Cafeteria Kokomilk</p>
+        <p>CBTIS 4 Programación</p>
+        <p>4° Semestre </p>
+        <p>Eq006</p>
     </footer>
 
-    <script src="js/catalogo.js" type="module"></script>
 </body>
 
 </html>
