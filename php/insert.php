@@ -1,6 +1,7 @@
 <?php
 
 require_once("conexion.php");
+include("backup.php");
 
 /*
     Recibe datos de un formulario y los inserta en la tabla correspondiente.
@@ -93,6 +94,7 @@ switch ($_POST["table"]) {
 // Ejecutar SQL
 if (mysqli_query($conn, $sql)) {
     echo "Registro agregado correctamente";
+    backupDatabase();
 } else {
     echo mysqli_error($conn);
 }

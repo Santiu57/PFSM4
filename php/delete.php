@@ -1,6 +1,7 @@
 <?php
 
 require_once("conexion.php");
+include("backup.php");
 
 /*
     table: nombre de la tabla
@@ -23,6 +24,7 @@ if ($data = json_decode(file_get_contents("php://input"), true)) {
         if ($data['table'] === "productos") {
             deleteImage($ruta);
         }
+        backupDatabase();
     } else {
         echo "Error: " . mysqli_error($conn);
     }

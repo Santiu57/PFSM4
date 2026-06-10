@@ -1,6 +1,7 @@
 <?php
 
 include("../php/conexion.php");
+include("../php/backup.php");
 
 /*
     Recibe datos de un formulario para actualizar un registro en la tabla correspondiente.
@@ -150,6 +151,7 @@ if ($_POST) {
 
     if (mysqli_query($conn, $sql)) {
         echo "Registro actualizado correctamente";
+        backupDatabase();
     } else {
         echo "Error: " . mysqli_error($conn);
     }
