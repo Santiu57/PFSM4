@@ -176,7 +176,7 @@ input:focus,
 select:focus,
 textarea:focus {
     outline: none;
-    background: var(--input-bg);
+    background: var(--body-bg);
     color: var(--input-text);
     border-color: var(--input-border-focus);
     box-shadow: 0 0 0 3px var(--primary-ring);
@@ -575,7 +575,6 @@ footer {
     padding: 10px 14px;
     border: 1px solid var(--border);
     border-radius: 10px;
-    background: var(--surface-alt);
     color: var(--text);
     font-size: .95rem;
     outline: none;
@@ -693,7 +692,6 @@ footer {
     padding: 10px 14px;
     border: 1px solid var(--border);
     border-radius: 10px;
-    background: var(--surface-alt);
     color: var(--text);
     font-size: .95rem;
     outline: none;
@@ -807,7 +805,6 @@ footer {
     padding: 10px 14px;
     border: 1px solid var(--border);
     border-radius: 10px;
-    background: var(--surface-alt);
     color: var(--text);
     font-size: .95rem;
     outline: none;
@@ -926,8 +923,6 @@ footer {
     padding: 10px 14px;
     border: 1px solid var(--border);
     border-radius: 10px;
-    background: var(--surface-alt);
-    color: var(--text);
     font-size: .95rem;
     outline: none;
     transition:
@@ -938,7 +933,6 @@ footer {
 
 .cliente .campo input:focus {
     border-color: var(--primary);
-    background: var(--white);
     box-shadow: 0 0 0 4px var(--primary-ring);
 }
 
@@ -1066,7 +1060,7 @@ footer {
 
 .clientes-form .campo input:focus {
     border-color: var(--primary);
-    background: var(--white);
+    background: var(--body-bg);
     box-shadow:
         0 0 0 4px var(--primary-ring);
 }

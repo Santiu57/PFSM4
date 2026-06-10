@@ -136,9 +136,9 @@ export class filters {
                     valor.type = "number";
 
                     operador.innerHTML = `
-                        <option value="<"><</option>
-                        <option value="=">=</option>
-                        <option value=">">></option>
+                        <option value="<">Menor a</option>
+                        <option value="=">Igual a</option>
+                        <option value=">">Mayor a</option>
                     `;
                 }
                 else if (type === "text") {

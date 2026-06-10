@@ -61,6 +61,7 @@ async function load(desc = false, order = "idCliente", where = "") {
     let data;
     try {
         data = JSON.parse(text);
+        console.log("Clientes cargados:", data);
     } catch {
         console.error("Respuesta no JSON:", text);
         return;
